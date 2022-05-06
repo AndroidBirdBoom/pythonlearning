@@ -112,15 +112,16 @@ L[::2]
 
 ### 2. 迭代
 
-> 可以理解为数组的遍历，但是python中不止可以遍历list/tuple，还可以遍历dict。事实上，**<font color="red">只要是可迭代对象，都可以使用for in 遍历</font>**  
+> 可以理解为数组的遍历，但是python中不止可以遍历list/tuple，还可以遍历dict。事实上，**<font color="red">只要是可迭代对象，都可以使用for in 遍历</font>**
 > 1. str也可以迭代
+
 ```python
 from collections.abc import Iterable
 
 d = {'a': 1, 'b': 2, 'c': 3}
 
-#使用以下方法判断是否可迭代 
-isinstance(d,Iterable)
+# 使用以下方法判断是否可迭代 
+isinstance(d, Iterable)
 
 # 默认遍历的是key，即a,b,c
 for key in d:
@@ -137,3 +138,35 @@ for item in d.items():
 for s in 'ABC':
     print(s)
 ```
+
+### 3. 列表生成器
+
+> 按照一定的命令快速生成list
+
+```python
+# 下列代码生成 1*1，2*2...等值
+L = []
+for x in range(1, 11):
+    L.append(x * x)
+
+# 上述代码通过列表生成器实现如下：
+L = [x * x for x in range(1, 11)]
+
+# 可以在for后面加入判断语句筛选结果
+L = [x * x for x in range(1, 11) if x % 2 == 0]
+
+# 也可以使用多个for
+L = [x + y for x in 'ABC' for y in 'EFG']
+
+# 通常，可以在for 中输出多个值
+d = {'a': 1, 'b': 2, 'c': 3}
+L = [k + " = " + v for k, v in d.items()]
+
+# 列表生成器后面只能有if，不能有else，而生成器前面必须是if+else
+L = [x if x == 3 else x//2 for x in range(1, 11) if x % 3 == 0] 
+```
+
+### 4. 生成器
+> 没太明白使用场景
+
+### 5. 迭代器
