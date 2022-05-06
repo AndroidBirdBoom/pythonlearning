@@ -71,6 +71,14 @@ if __name__ == '__main__':
     quadratic(2, 3, 1)
     quadratic(1, 3, -4)
     power(4, 3)
+    # print_hi('PyCharm')
+    # print(r"\\\t\\\"")
+    print('中文'.encode("utf-8"))
+    print('asd'.encode("ascii"))
+    print(ord('a'))
+    print('成绩提升了%.2f%%' % 13232.343)
+    s = 13234.4334534
+    print(f'dkfjdl{s:.3f}')
 
     calc(1,2)
 # See PyCharm help at https://www.jetbrains.com/help/pycharm/
