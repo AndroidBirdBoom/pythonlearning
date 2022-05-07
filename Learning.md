@@ -35,7 +35,7 @@ power(10, hint="默认参数", n=9)
 #### 1. 可变参数
 
 > 当调用的函数参数不明确时，可以使用可变参数
-> 1. 可变参数传入在函数中组装为一个tuple
+> > 可变参数传入在函数中组装为一个tuple
 
 ```python
 def calc(*numbers):
@@ -92,7 +92,7 @@ person("hahah")
 ### 1. 切片
 
 > 可以对list或tuple进行切片操作，一次性截取多个元素
-> 1. 也可以对str进行切片
+> > 也可以对str进行切片
 
 ```python
 L = ['a', 'b', 'c', 'd', 'e']
@@ -113,7 +113,7 @@ L[::2]
 ### 2. 迭代
 
 > 可以理解为数组的遍历，但是python中不止可以遍历list/tuple，还可以遍历dict。事实上，**<font color="red">只要是可迭代对象，都可以使用for in 遍历</font>**
-> 1. str也可以迭代
+> > str也可以迭代
 
 ```python
 from collections.abc import Iterable
@@ -163,10 +163,66 @@ d = {'a': 1, 'b': 2, 'c': 3}
 L = [k + " = " + v for k, v in d.items()]
 
 # 列表生成器后面只能有if，不能有else，而生成器前面必须是if+else
-L = [x if x == 3 else x//2 for x in range(1, 11) if x % 3 == 0] 
+L = [x if x == 3 else x // 2 for x in range(1, 11) if x % 3 == 0] 
 ```
 
 ### 4. 生成器
-> 没太明白使用场景
+
+> 动态生成的一种机制，可以只在需要的时候生成
+> > 比如list需要首先创建并且初始化数据，生成器只需要在需要的时候才生成数据
+>
+> 生成器的创建方式：
+> 1. 列表生成器中的[]改为()
+> 2. 函数中使用yield后，变为generator函数
+     >
++ generator函数在调用next()函数时运行，遇到yield返回
+>   + 再次调用generator函数时，从上次yield处继续运行
+
+```python
+# 通过改变列表生成器的()产生的生成器
+s = (x * 3 for x in range(10))
+
+# 可以通过使用以下方法获取数据，但是没有数据时会产生StopIteration错误
+next(s)
+
+# 也可以通过for遍历数据，并且不会产生上述错误
+for n in s:
+    print(n)
+
+
+# 下面是generator function，只有调用next时，才运行，运行到yield停止，除非再次调用next
+# 或者利用 for 循环遍历
+def triangles():
+    L = [1]
+    while True:
+        yield L
+        L = [1] + [L[n] + L[n + 1] for n in range(len(L) - 1)] + [1]
+```
 
 ### 5. 迭代器
+
+> 可以被next()调用的叫做迭代器
+> > for 可以作用在两种数据类型当中
+> > 1. 集合数据类型。list、tuple、dict、set、str等
+> > 2. generator。生成器、generator function
+>
+
+| 数据类型  | list | tuple | dict | set | 生成器 | generator function |  
+|:-----:|:----:|:-----:|:----:|:---:|:---:|:------------------:|
+|Iterable| yes  |  yes  | yes  | yes | yes |        yes         |
+|Iterator|no|no|no|no| yes |        yes         |
+
+> 通过上图可知，**生成器与generator function都是Iterable，但其他未必是Iterator**，<font color="red">可以通过iter()方法将Iterable转化为Iterator</font>
+
+```python
+from collections.abc import Iterable, Iterator
+
+t = [x for x in range(10)]  # Iterable
+g = (x for x in range(10))  # Iterable & Iterator
+
+isinstance(t, Iterable)  # True
+isinstance(t, Iterator)  # False
+isinstance(g, Iterable)  # True
+isinstance(g, Iterable)  # True
+
+```
