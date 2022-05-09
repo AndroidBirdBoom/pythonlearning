@@ -259,14 +259,19 @@ sub(mul(add(1, 2), 3), 4)
 # map(一个函数,一个Iterable)
 map(str, [1, 2, 3])  # 转换为字符型list
 
-# reduce(一个函数，一个序列)
+# reduce(一个函数，一个Iterable)
 # reduce传入的函数必须接收两个参数，累积计算
 from functools import reduce
 
 reduce(lambda x, y: x + y, [1, 2, 3])  # ((1+2)+3)
 
+# filter(一个函数，一个Iterable)
+# filter传入函数返回True/False，只保留列表中True的字段
+reduce(lambda x: x % 2 == 0, [1, 2, 3])  # 返回偶数
 
-
+# sorted(一个Iterable，一个函数，reverse=bool)
+# sorted通过函数返回要比较的东西，reverse决定是否要逆置
+sorted(['zbc', 'Adk', 'bdd'], key=str.lower, reverse=True)  # ['zbc','bdd','Adk']
 ```
 
 
