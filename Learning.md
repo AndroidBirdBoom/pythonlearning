@@ -14,6 +14,7 @@
 
 [函数式编程](###3)
 - [高阶函数](####31)
+- [返回函数](####32)
 
 ## <span id = '##1'>函数</span>
 
@@ -291,6 +292,22 @@ reduce(lambda x: x % 2 == 0, [1, 2, 3])  # 返回偶数
 sorted(['zbc', 'Adk', 'bdd'], key=str.lower, reverse=True)  # ['zbc','bdd','Adk']
 ```
 
+### 2. 返回函数  
+> 将函数作为返回值返回  
+> **返回函数不要引用任何循环变量，或者后续会发生变化的变量**
+```python
+# 定义了一个延迟加载的函数
+def lazy_add(x,y):
+    def add():
+        return x+y
+    return add
+
+# t是一个函数
+t = lazy_add(1,2)
+
+#此时才会执行add()函数
+t()       
+```
 
 
 

@@ -42,7 +42,7 @@ def str2float(s):
     return x1 + x2 / (10 ** len(s[index + 1:]))
 
 
-def demo1():
+def demo_map_reduce():
     print(sub(mul(add(1, 2), 3), 4))
     # 高阶函数调用
     print(sub_m(1, 2, 3, 4, add, mul))
@@ -102,7 +102,7 @@ def palindrome():
         n += 1
 
 
-def demo2():
+def demo_filter():
     print(list(filter(is_odd, map(int, ['1', '2', '3', '4']))))
     d = primes()
     for n in d:
@@ -129,7 +129,7 @@ def by_name(t):
     return t[1]
 
 
-if __name__ == "__main__":
+def demo_sort():
     l = [739, 322, 3, 909, 49, 538, -1000]
     print(sorted(l, key=abs))
 
@@ -138,3 +138,69 @@ if __name__ == "__main__":
 
     L = [('Bob', 75), ('Adam', 92), ('Bart', 66), ('Lisa', 88)]
     print(sorted(L, key=by_name, reverse=True))
+
+
+def calc_sum(*args):
+    sum = 0
+    for n in args:
+        sum += n
+    return sum
+
+
+def lazy_sum(*args):
+    def sum():
+        ax = 0
+        for n in args:
+            ax = ax + n
+        return ax
+
+    return sum
+
+
+def lazy_s(*args):
+    return calc_sum
+
+
+def count():
+    l = []
+    for i in range(1, 4):
+        def mul():
+            return i * i
+
+        l.append(mul)
+    return l
+
+
+def count_r():
+    l = []
+    for i in range(1, 4):
+        def f(i):
+            def mul():
+                return i * i
+
+            return mul
+
+        l.append(f(i))
+    return l
+
+
+if __name__ == "__main__":
+    print(calc_sum(1, 2, 3, 4))
+
+    t = lazy_sum(1, 2, 3)
+    print(t())
+
+    tt = lazy_s(14, 4, 5)
+    print(tt(1, 2, 3, 4, 5))
+
+    # 循环体中的变量变化，导致返回结果异常
+    t1, t2, t3 = count()
+    print(t1())
+    print(t2())
+    print(t3())
+
+
+    l1, l2, l3 = count_r()
+    print(l1())
+    print(l2())
+    print(l3())
