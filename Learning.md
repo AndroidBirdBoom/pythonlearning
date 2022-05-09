@@ -175,8 +175,10 @@ L = [x if x == 3 else x // 2 for x in range(1, 11) if x % 3 == 0]
 > 1. 列表生成器中的[]改为()
 > 2. 函数中使用yield后，变为generator函数
      >
+
 + generator函数在调用next()函数时运行，遇到yield返回
->   + 再次调用generator函数时，从上次yield处继续运行
+
+> + 再次调用generator函数时，从上次yield处继续运行
 
 ```python
 # 通过改变列表生成器的()产生的生成器
@@ -226,3 +228,47 @@ isinstance(g, Iterable)  # True
 isinstance(g, Iterable)  # True
 
 ```
+
+## 函数式编程
+
+-------  
+> 函数式编程的特点，允许把函数本身作为参数传递给另一个函数，还允许返回一个函数。
+
+```python
+# 求 (1 + 2) * 3 - 4
+def add(x, y):
+    return x + y
+
+
+def mul(x, y):
+    return x * y
+
+
+def sub(x, y):
+    return x - y
+
+
+sub(mul(add(1, 2), 3), 4)
+```
+
+### 1. 高阶函数
+
+> 简单理解就是函数的参数是其他的函数
+
+```python
+# map(一个函数,一个Iterable)
+map(str, [1, 2, 3])  # 转换为字符型list
+
+# reduce(一个函数，一个序列)
+# reduce传入的函数必须接收两个参数，累积计算
+from functools import reduce
+
+reduce(lambda x, y: x + y, [1, 2, 3])  # ((1+2)+3)
+
+
+
+```
+
+
+
+
