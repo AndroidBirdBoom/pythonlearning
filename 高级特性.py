@@ -111,8 +111,7 @@ def triangles():
         L = [1] + [L[n] + L[n + 1] for n in range(len(L) - 1)] + [1]
 
 
-if __name__ == "__main__":
-
+def generator_s():
     s = (x * x for x in range(3))
     print(s)
 
@@ -132,7 +131,6 @@ if __name__ == "__main__":
     for x in t:
         print(x)
 
-
     for x in triangles_(2):
         print(x)
 
@@ -145,3 +143,59 @@ if __name__ == "__main__":
         n += 1
         if n == 10:
             break
+
+
+def g():
+    yield 1
+    yield 2
+    yield 3
+
+
+if __name__ == "__main__":
+    print('Iterable ?[1,2,3]:', isinstance([1, 2, 3], Iterable))
+    print('Iterable?\'abc\':', isinstance('abc', Iterable))
+    print('Iterable?123:', isinstance(123, Iterable))
+    print('Iterable?g():', isinstance(g(), Iterable))
+
+    print('Iterator?[1,2,3]:', isinstance([1, 2, 3], Iterator))
+    print('Iterator?iter([1,2,3]):', isinstance(iter([1, 2, 3]), Iterator))
+    print('Iterator?\'abc\':', isinstance('abc', Iterator))
+    print('Iterator?123:', isinstance(123, Iterator))
+    print('Iterator?g():', isinstance(g(), Iterator))
+
+    print('for x in [1,2,3,4,5]:')
+    for x in [1, 2, 3, 4, 5]:
+        print(x)
+
+    print('for x in iter([1,2,3,4,5])')
+    for x in iter([1, 2, 3, 4, 5]):
+        print(x)
+
+    s = range(3)
+    print("range(3) type is list?:", isinstance(s, list))
+    print("What's type of range(3)?:", type(s))
+    print('so range(3) is range type?', isinstance(s, range))
+
+    print("next():")
+    it = iter([1, 2, 3, 4, 5])
+    print(next(it))
+    print(next(it))
+    print(next(it))
+    print(next(it))
+    print(next(it))
+    # print(next(it))        #报错StopIteration
+
+    d = {'a': 1, 'b': 2, 'c': 3}
+    print('iter key', d)
+    for k in d:
+        print('key = ', k)
+
+    print('iter item', d)
+    for k, v in d.items():
+        print('item = ', k, v)
+
+    for i,value in enumerate(['a','b','c']):
+        print(i,value)
+
+    for x,y in iter([(1,'a'),(2,'b'),(3,'c')]):
+        print(x,y)
