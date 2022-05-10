@@ -1,5 +1,7 @@
+import time
 from collections.abc import Iterator, Iterable
 from functools import reduce
+import functools
 
 
 def add(x, y):
@@ -184,7 +186,29 @@ def count_r():
     return l
 
 
-if __name__ == "__main__":
+def inc():
+    x = 0
+
+    def fn():
+        nonlocal x
+        x = x + 1
+        return x
+
+    return fn
+
+
+def createCounter():
+    count = 0
+
+    def counter():
+        nonlocal count
+        count += 1
+        return count
+
+    return counter
+
+
+def demo_return():
     print(calc_sum(1, 2, 3, 4))
 
     t = lazy_sum(1, 2, 3)
@@ -199,8 +223,100 @@ if __name__ == "__main__":
     print(t2())
     print(t3())
 
-
     l1, l2, l3 = count_r()
     print(l1())
     print(l2())
     print(l3())
+
+    x = inc()
+    print(x())
+    print(x())
+
+    L = list(filter(lambda x: x % 2 == 1, range(1, 20)))
+    print(L)
+
+
+def log_t(text):
+    def log(fun):
+        @functools.wraps(fun)
+        def wrapper(*args, **kw):
+            print("%s %s()" % (text, fun.__name__))
+            return fun(*args, **kw)
+
+        return wrapper
+
+    return log
+
+
+@log_t('ex')
+def now():
+    print("2022-5-1")
+
+
+def wr(fun):
+    @functools.wraps(fun)
+    def wrapper(*args, **kw):
+        r = fun(*args, **kw)
+        print("调用结果为：%d" % r)
+        return r
+
+    return wrapper
+
+
+@wr
+def sum(a, b):
+    return a + b
+
+
+def metric(fn):
+    @functools.wraps(fn)
+    def wrapper(*args, **kw):
+        start = time.time()
+        r = fn(*args, **kw)
+        print('%s executed in %s ms' % (fn.__name__, (time.time() - start) * 1000))
+        return r
+
+    return wrapper
+
+
+def logse(fun):
+    @functools.wraps(fun)
+    def wrapper(*args, **kw):
+        print('begin call')
+        r = fun(*args, **kw)
+        print('end call')
+        return r
+
+    return wrapper
+
+
+@logse
+@metric
+def pri():
+    time.sleep(0.21)
+
+
+def log(text):
+    def ge(fun):
+        @functools.wraps(fun)
+        def wrapper(*args, **kw):
+            return fun(*args, **kw)
+
+        return wrapper
+
+    return ge
+
+
+if __name__ == "__main__":
+    t = now
+    t()
+    print(t.__name__)  # 名字已经变了
+
+    print(sum(1, 2))
+
+    pri()
+
+    print(int('1000000', base=2))
+
+    int2 = functools.partial(int, base=2)
+    print(int2('1000000'))

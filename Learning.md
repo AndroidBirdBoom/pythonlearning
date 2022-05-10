@@ -1,11 +1,13 @@
-[函数](###1)  
-- [格式](####1)  
+[函数](###1)
+
+- [格式](####1)
 - [返回多个值](####2)
 - [函数参数](####3)
-  - [可变参数](#####1)
-  - [关键字参数](#####2)
+    - [可变参数](#####1)
+    - [关键字参数](#####2)
 
-[高级特性](###2)  
+[高级特性](###2)
+
 - [切片](####21)
 - [迭代](####22)
 - [列表生成器](####23)
@@ -13,8 +15,12 @@
 - [迭代器](####25)
 
 [函数式编程](###3)
+
 - [高阶函数](####31)
 - [返回函数](####32)
+- [匿名函数](####33)
+- [装饰器](####34)
+- [偏函数](####35)
 
 ## <span id = '##1'>函数</span>
 
@@ -292,22 +298,79 @@ reduce(lambda x: x % 2 == 0, [1, 2, 3])  # 返回偶数
 sorted(['zbc', 'Adk', 'bdd'], key=str.lower, reverse=True)  # ['zbc','bdd','Adk']
 ```
 
-### 2. 返回函数  
+### 2. <span id = '###32'>返回函数</span>
+
 > 将函数作为返回值返回  
-> **返回函数不要引用任何循环变量，或者后续会发生变化的变量**
+> **返回函数不要引用任何循环变量，或者后续会发生变化的变量**  
+> 使用`nonlocal`来引用外部函数的变量
+
 ```python
 # 定义了一个延迟加载的函数
-def lazy_add(x,y):
+def lazy_add(x, y):
     def add():
-        return x+y
+        return x + y
+
     return add
 
-# t是一个函数
-t = lazy_add(1,2)
 
-#此时才会执行add()函数
+# t是一个函数
+t = lazy_add(1, 2)
+
+# 此时才会执行add()函数
 t()       
 ```
 
+### 3. <span id = '###33'>匿名函数</span>
+
+> 就是`lambda函数`  
+> `lambda函数`只能有一个表达式，不用写return，返回值就是该表达式的结果
+
+```python
+def build(x, y):
+    return lambda: x, y
+```
+
+### 4. <span id = '###34'>装饰器</span>
+
+> 在不改变原来函数的基础上，动态增加函数的功能  
+> 一个函数上可以使用多个装饰器，调用方式类似递归
+
+```python
+import functools
+
+
+# 在原先sum基础上打印信息
+def log(fun):
+    # 将fun信息复制到wrapper中，防止未知错误
+    @functools.wraps(fun)
+    def wrapper(*args, **kw):
+        print("call %s():" % fun.__name__)
+        return fun(*args, **kw)
+
+
+@log
+def sum(a, b):
+    return a + b
+
+
+# 函数对象__name__可以拿到函数的名字
+t = sum
+t.__name__  # sum
+
+```
+
+### 5. <span id = '###35'>偏函数</span>
+
+> 给函数设置默认值，简化调用
+
+```python
+import functools
+
+int2 = functools.partial(int, base=2)
+# 此处int2函数默认设置二进制转换
+int2('10001')
+# 也可以设置其他的
+int2('10001', base=10)
+```
 
 

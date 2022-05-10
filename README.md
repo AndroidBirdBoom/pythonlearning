@@ -21,9 +21,13 @@
    - 列表生成式 `[x for x in 'abc']`
    - 生成器 `(x for x in 'abc') & yield`
    - 迭代器 `Iterator & Iterable`
-4. 函数式编程（进行中）
+4. 函数式编程（完成）
     - 高阶函数 `map、reduce、filter、sorted`
     - 返回函数
-    - 匿名函数
-    - 装饰器
-    - 片函数
+    - 匿名函数 `lambda`
+    - 装饰器 `functools.warp(fun)`
+    - 偏函数 `functools.partical`
+5. 模块（进行中）
+   - 使用模块
+   - 安装模块
+6. 面向对象编程
