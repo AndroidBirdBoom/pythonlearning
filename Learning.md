@@ -30,7 +30,9 @@
 - [继承和多态](####53)
 - [获取对象信息](####54)
 - [实例属性和类属性](####55)
-  [面向对象高级编程](###6)
+
+[面向对象高级编程](###6)
+
 - [使用__slots__](####61)
 - [使用@property](####62)
 - [多重继承](####63)
@@ -588,7 +590,7 @@ getattr(obj, 'power')()  # 返回方法，并调用
 >
 >     class Person():
 >          name = 'sc'
-> 
+>
 > 避免实例变量和类变量起一样的名字，因为实例变量找不到回去找类变量，引起错误
 
 ```python
@@ -613,6 +615,53 @@ Person.name = 'Lune'
 del obj.name
 # 由于删除了实例变量，所以会找类变量
 obj.name  # Lune
+
+
+```
+
+## 6. <span id = '##6'>面向对象高级编程</span>
+
+### 1. <span id = '###61'>使用__slots__</span>
+
+> python可以动态赋属性和方法，而`__slots__ = ()`可以限制赋值的属性
+>
+> 子类不会受到父类设置的`__slots__`影响，除非子类也设置自己的`__slots__`，且设置后会继承父类的
+
+```python
+from types import MethodType
+
+
+class Student():
+    __slots__ = ('age', 'score')
+
+
+def set_score(self, score):
+    self.score = score
+
+
+tom = Student()
+jack = Student()
+tom.age = 15
+tom.age  # 15
+jack.age  # 报错，只有tom有age属性
+# 给tom 设置方法
+tom.set_score = MethodType(set_score, tom)
+tom.set_score(68)
+tom.score  # 68
+jack.set_score(38)  # 报错
+
+# 通过给类设置属性和方法，可以为所有实例共有
+Student.set_score = set_score
+jack.set_score(58)
+jack.score  # 58
+
+# 设置了__slots__，不允许赋值name属性
+jack.name = 'jack'  # 报错
+
+
+class LiHua(Student):
+    # 此时，LiHua类可以设置name,age和score属性了
+    __slots__ = 'name'
 
 
 ```
