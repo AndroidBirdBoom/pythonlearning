@@ -662,6 +662,76 @@ jack.name = 'jack'  # 报错
 class LiHua(Student):
     # 此时，LiHua类可以设置name,age和score属性了
     __slots__ = 'name'
+```
 
+### 2. <span id = '###62'>使用@property</span>
+
+> 通过@property可以简化实例变量的的赋值工作  
+> **注意：属性的方法名和实例变量不能重名，否则会引起无限调用**
+
+```python
+class Person(object):
+
+    def __init__(self):
+        self._age = None
+
+    @property
+    def get_age(self):
+        return self._age
+
+    @get_age.setter
+    def set_age(self, age):
+        if age <= 0:
+            raise Exception("不能赋负值！")
+        elif age > 200:
+            raise Exception("年龄不能过大！")
+        else:
+            self._age = age
+
+
+d = Person()
+# 这里会直接调用set_age()，就像赋值一样，十分方便
+d.set_age = 18
+d.get_age  # 18
+```
+
+### 3. <span id = '###63'>多重继承</span>
+
+> python可以同时继承多个类
+
+```python
+
+class Person(object):
+
+    def __init__(self, name, age):
+        self._name = name
+        self._age = age
+
+    @property
+    def name(self):
+        return self._name
+
+    @property
+    def age(self):
+        return self._age
+
+
+class EnglishMixIn(object):
+
+    def language(self):
+        print("I speak English!")
+
+
+class Tom(Person, EnglishMixIn):
+
+    def __init__(self, name, age, id):
+        super().__init__(name, age)  # 这种方式不需要加self
+        # Person.__init__(self,name,age)    这种方式需要加self
+        self._id = id
+
+    def to_string(self):
+        print("我的名字是：%s，年龄为：%d" % (self.name, self.age))
+        EnglishMixIn.language(self)
+        # super().language()
 
 ```
