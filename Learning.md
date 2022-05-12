@@ -23,8 +23,38 @@
 - [偏函数](####35)
 
 [模块](###4)  
-[面向对象编程](###5)  
-[面向对象高级编程](###6)
+[面向对象编程](###5)
+
+- [类和实例](####51)
+- [访问限制](####52)
+- [继承和多态](####53)
+- [获取对象信息](####54)
+- [实例属性和类属性](####55)
+  [面向对象高级编程](###6)
+- [使用__slots__](####61)
+- [使用@property](####62)
+- [多重继承](####63)
+- [定制类](####64)
+- [使用枚举类](####65)
+- [使用元类](####66)
+
+[错误、调试和测试](###7)
+
+- [错误处理](####71)
+- [调试](####72)
+- [文档测试](####73)
+- [文档测试](####74)
+
+[IO编程](###8)
+
+- [文件读写](####81)
+- [StringIO和BytesIO](####82)
+- [操作文件和目录](####83)
+- [序列化](####84)
+
+[正则表达式](###9)  
+[常用内建模块](###10)  
+[常用第三方模块](###11)
 
 ## <span id = '##1'>函数</span>
 
@@ -384,19 +414,205 @@ int2('10001', base=10)
 > 一个.py文件就是一个模块  
 > 一个含有__init__.py就是一个包  
 > [第三方库查询网站](https://pypi.org/)  
-> 查看已安装的内置模块和第三方模块方法   
-> 
+> 查看已安装的内置模块和第三方模块方法
+>
 >     import sys
 >     sys.path
+
 ````python
 #!/usr/bin/env python3         #Mac和Linux必须
 # -*- coding: utf-8 -*-        #编码环境
 
-' a test module '              #模块描述
+' a test module '  # 模块描述
 
-__author__ = 'Wang Gang'       #作者
+__author__ = 'Wang Gang'  # 作者
 
-if __name__ == '__main__':     #作为模块内的测试用
+if __name__ == '__main__':  # 作为模块内的测试用
     pass
 ````
 
+## 5. <span id = '##5'>面向对象编程</span>
+
+> 将对象作为基本单元，更加抽象  
+> 面向对象三大特点：封装、继承和多态
+>
+>     私有变量：__name，不可以直接访问，但可以通过实例._类名__name来访问
+>             _name，可以直接访问，但不建议直接访问
+>     特殊变量：__name__，可以直接访问
+>
+
+### 1. <span id = '###51'>类和实例</span>
+
+> 格式：`class` + 类名(继承类)  
+> object类为所有类的基类
+
+```python
+class Person(object):
+    pass
+
+
+class Student(Person):
+
+    # self 表示创建的实例本身，
+    # 对self的操作 = 对实例操作
+    def __init__(self, name, score):
+        self.__name = name  # 对变量添加__表示私有化，外部无法访问到（一定程度上）
+        self.__score = score
+
+    # 封装：将变量封装起来，直接调用，透明
+    def to_string(self):
+        print("名字是：%s，分数为：%s" % (self.__name, self.__score))
+
+
+# 创建实例
+tom = Student('tom', 98)
+```
+
+### 2. <span id = '###52'>访问限制</span>
+
+> 对于禁止外部访问的变量，可以使用`__ + 变量`的形式
+> > `private变量`并不是绝对隐秘的，可以通过`实例._类名__变量`的方式引用
+>
+> > `_ + 变量`的变量原则上来说也不允许访问，但是可以通过实例拿到
+
+```python
+class Person(object):
+
+    def __init__(self, name, score):
+        # __name 外部无法通过实例调用
+        self.__name = name
+        self._score = score
+
+
+tom = Person()
+
+# 以下方式无法获取name属性
+tom.__name
+
+# 以下方式可以（强烈不建议）
+tom._Person__name
+
+# 可以正常拿到score（不建议）
+tom._score
+```
+
+### 3. <span id = '###53'>继承和多态</span>
+
+> 对于python来说，不要求严格的传入父类的对象，只要保持方法一致就行：
+>
+>     class A(object):    class B(A):
+>       def run():           def run():
+>           print('A')           print('B')
+>     
+>     class C(object):    # 这里的传参可以是A的子类，也可以不是，只要有run()方法就行
+>       def run():        def revoke_run(o):    
+>           print('C')        o.run()
+
+```python
+class Animal(object):
+
+    def sing(self):
+        print("叫声")
+
+
+class Dog(Animal):
+
+    def sing(self):
+        print("汪汪")
+
+
+class Cat(Animal):
+
+    def sing(self):
+        print("喵喵")
+
+
+def call_sing(animal):
+    animal.sing()
+
+
+cat = Cat()
+dog = Dog()
+
+# 不关心传入的是哪个具体类
+call_sing(cat)  # 喵喵
+call_sing(dog)  # 汪汪
+
+# 多态，动态改变父类的方法，统一接口（符合'开闭'原则）
+isinstance(cat, Cat)  # True
+isinstance(cat, Animal)  # True
+```
+
+### 4. <span id = '###54'>获取对象信息</span>
+
+```python
+import types
+
+
+class MyObject(object):
+
+    def __init__(self):
+        self.x = 9
+
+    def power(self):
+        return self.x * self.x
+
+
+def fun():
+    pass
+
+
+type(lambda x: x) == types.LambdaType  # True
+type(fun) == types.FunctionType
+types((x for x in range(3))) == types.GeneratorType
+type(abs) == types.BuiltinFunctionType
+
+# 判断类和子类
+isinstance()
+
+# 判断含有哪些方法和属性
+dir()
+
+obj = MyObject()
+hasattr(obj, 'x')  # True
+setattr(obj, 'x', 122)  # x = 122
+getattr(obj, 'z', 404)  # 获取z的值，没有的话默认为404
+hasattr(obj, 'power')  # True
+getattr(obj, 'power')()  # 返回方法，并调用
+```
+
+### 5. <span id = '###55'>实例属性和类属性</span>
+
+> 实例属性：self.name  
+> 类属性：所有实例都可以访问到类属性 **重点：共有共享**
+>
+>     class Person():
+>          name = 'sc'
+> 
+> 避免实例变量和类变量起一样的名字，因为实例变量找不到回去找类变量，引起错误
+
+```python
+class Person(object):
+    name = 'tom'
+
+
+obj = Person()
+
+# 由于没有实例变量，所以会找类变量
+obj.name  # tom
+
+Person.name  # tom
+
+obj.name = 'jack'
+obj.name  # jack
+
+# 类变量赋值
+Person.name = 'Lune'
+
+# 删除实例变量
+del obj.name
+# 由于删除了实例变量，所以会找类变量
+obj.name  # Lune
+
+
+```
