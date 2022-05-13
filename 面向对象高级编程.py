@@ -1,4 +1,5 @@
 from types import MethodType
+from enum import Enum, unique
 
 
 def set_score(self, score):
@@ -113,13 +114,13 @@ class Animal(object):
 class Mammal(Animal):
 
     def __init__(self, name):
-        Animal.__init__(self,name)
+        Animal.__init__(self, name)
 
 
 class Bird(Animal):
 
     def __init__(self, name):
-        Animal.__init__(self,name)
+        Animal.__init__(self, name)
 
 
 class FlyableMinIn(object):
@@ -137,26 +138,146 @@ class RunnableMinIn(object):
 class Dog(Mammal, RunnableMinIn):
 
     def __init__(self, name):
-        Mammal.__init__(self,name)
+        Mammal.__init__(self, name)
 
     def to_string(self):
         print("我是：", self.name)
         RunnableMinIn.run(self)
 
+    def __str__(self):
+        return 'I am %s' % super().name
+
+    def __repr__(self):
+        return self.__str__()
+
 
 class Bat(Bird, FlyableMinIn):
 
     def __init__(self, name):
-        Bird.__init__(self,name)
+        Bird.__init__(self, name)
 
     def to_string(self):
         print("我是：", self.name)
         super().fly()
 
 
-if __name__ == "__main__":
+class Fib(object):
+
+    def __init__(self):
+        self.a, self.b = 0, 1
+
+    def __iter__(self):
+        return self
+
+    def __next__(self):
+        self.a, self.b = self.b, self.a + self.b
+        if self.a > 100:
+            raise StopIteration()
+        return self.a
+
+    def __getitem__(self, item):
+        a, b = 1, 1
+        if isinstance(item, int):
+            for x in range(item):
+                a, b = b, a + b
+            return a
+        elif isinstance(item, slice):  # 判断是不是切片
+            L = []
+            start = item.start
+            end = item.stop
+            if start is None:
+                start = 0
+            for n in range(end):
+                if n >= start:
+                    L.append(a)
+                a, b = b, a + b
+            return L
+
+    def __getattr__(self, item):
+        if item == 'score':
+            return 940
+        elif item == 'age':
+            return lambda x: x + 1
+
+
+class Student(object):
+
+    def __init__(self, name):
+        self._name = name
+
+    def __call__(self, *args, **kwargs):
+        print("My name is ", self._name)
+
+
+tom = Student('tom')
+
+
+def demo_st():
     d = Dog('狗子')
     d.to_string()
 
     b = Bat('蝙蝠')
     b.to_string()
+
+    print(Dog('狐狸'))
+    print(d)
+
+    fib = Fib()
+    for f in fib:
+        print(f)
+
+    print(fib[3:7])
+
+    print(fib.score)
+    print(fib.age(2984))
+
+    tom = Student('tom')
+    tom()
+    print(callable(tom))
+    print(callable(b))
+    print(callable([1, 2, 3]))
+
+
+@unique
+class Weekday(Enum):
+    Sun = 0
+    Mon = 1
+    Tue = 2
+    Wed = 3
+    Thu = 4
+    Fri = 5
+    Sat = 6
+
+
+class Gender(Enum):
+    Male = 0
+    Female = 1
+
+
+class Student(object):
+    def __init__(self, name, gender):
+        self.name = name
+        self.gender = gender
+
+
+import types
+
+
+def fn(self, hel):
+    print("say", hel)
+
+
+if __name__ == "__main__":
+    print(Weekday.Mon.value)
+
+    for name, mumber in Weekday.__members__.items():
+        print(name, "=>", mumber)
+
+    print(Weekday(1))
+    print(Weekday(1) == Weekday.Mon)
+
+    print(type(abs) == types.BuiltinFunctionType)
+
+    Hello = type('Hello', (object,), dict(hello=fn))
+    h1 = Hello()
+    h1.hello('Aloha')

@@ -37,6 +37,11 @@
 - [使用@property](####62)
 - [多重继承](####63)
 - [定制类](####64)
+    - [\_\_str__、\_\_repr__](#####641)
+    - [\_\_iter__、\_\_next__](#####642)
+    - [\_\_getitem__](#####643)
+    - [\_\_getattr__](#####644)
+    - [\_\_call__](#####645)
 - [使用枚举类](####65)
 - [使用元类](####66)
 
@@ -733,5 +738,162 @@ class Tom(Person, EnglishMixIn):
         print("我的名字是：%s，年龄为：%d" % (self.name, self.age))
         EnglishMixIn.language(self)
         # super().language()
+```
 
+### 4. <span id = '###64'>定制类</span>
+
+> 介绍一些常用的补充类信息的方法
+
+#### 4.1 <span id = '####641'>\_\_str__、\_\_repr__</span>
+
+```python
+class Person(object):
+
+    def __init__(self, name):
+        self._name = name
+
+    # 该方法在打印Person('name')时调用
+    def __str__(self):
+        return 'My name is ', self._name
+
+    # 该方法在打印实例时调用
+    def __repr__(self):
+        self.__str__()
+
+
+print(Person('Tom'))  # 调用__str__方法
+tom = Person('tom')
+print(tom)  # 调用__repr__方法
+
+```
+
+#### 4.2 <span id = '####642'>\_\_iter__、\_\_next__</span>
+
+> 通过实现这两个方法可以使类获得迭代效果
+
+```python
+class Fib(object):
+
+    def __init__(self):
+        self.a, self.b = 0, 1
+
+    # 获得迭代的变量
+    def __iter__(self):
+        return self
+
+    # next()方法获取的值
+    def __next__(self):
+        self.a, self.b = self.b, self.a + self.b
+        if self.a > 100:
+            raise StopIteration()
+        return self.a
+
+
+b = Fib()
+
+for n in b:
+    print(n)
+```
+
+#### 4.3 <span id = '####643'>\_\_getitem__</span>
+
+> 实现上述方法可以让类可以像list一样通过索引获取值，例如：Fib()[5]
+
+```python
+class Fib(object):
+
+    def __getitem__(self, item):
+        a, b = 1, 1
+        if isinstance(item, int):
+            for x in range(item):
+                a, b = b, a + b
+            return a
+        elif isinstance(item, slice):  # 判断是不是切片
+            L = []
+            start = item.start
+            end = item.stop
+            if start is None:
+                start = 0
+            for n in range(end):
+                if n >= start:
+                    L.append(a)
+                a, b = b, a + b
+            return L
+
+
+b = Fib()
+b[1]  # 1
+b[1:3]  # [1,2]
+```
+
+#### 4.4 <span id = '####644'>\_\_getattr__</span>
+
+> 当访问一个类中没有的属性时，会报错，可以实现上述方法返回默认值
+
+```python
+class Person(object):
+
+    def __getattr__(self, item):
+        if item == 'score':  # 返回默认值
+            return 98
+        elif item == 'age':  # 返回函数
+            return lambda x: x + 1
+
+
+tom = Person()
+tom.score  # 98
+tom.age(333)  # 334
+```
+
+#### 4.5 <span id = '####645'>\_\_call__</span>
+
+> 通过该方法可以直接调用实例对象
+
+```python
+class Student(object):
+
+    def __init__(self, name):
+        self._name = name
+
+    def __call__(self, *args, **kwargs):
+        print("My name is ", self._name)
+
+
+tom = Student('tom')
+tom()  # My name is tom
+
+# 判断变量是否可以调用
+callable(tom)  # True
+callable([1, 2])  # False
+```
+
+### 5. <span id = '###65'>使用枚举类</span>
+```python
+from enum import Enum,unique
+
+@unique
+class Weekday(Enum):
+    Sun = 0
+    Mon = 1
+    Tue = 2
+    Wed = 3
+    Thu = 4
+    Fri = 5
+    Sat = 6
+
+Weekday.Sun      # Weekday.Sun
+
+Weekday(1)       # Weekday.Mon
+```
+### 6. <span id  = '###66'>使用元类</span>
+> 动态生成类
+```python
+
+def fn(self,name):
+  print("say",name)
+  
+# type(类名，继承父类（元组方式），绑定方法)
+Hello = type('Hello', (object,), dict(hello=fn))
+h = Hello()
+h.hello('Aloha')  # say Aloha
 ```
