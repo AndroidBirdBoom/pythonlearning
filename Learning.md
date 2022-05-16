@@ -48,8 +48,9 @@
 [错误、调试和测试](###7)
 
 - [错误处理](####71)
+    - [logging、raise](#####711)
 - [调试](####72)
-- [文档测试](####73)
+- [单元测试](####73)
 - [文档测试](####74)
 
 [IO编程](###8)
@@ -868,8 +869,10 @@ callable([1, 2])  # False
 ```
 
 ### 5. <span id = '###65'>使用枚举类</span>
+
 ```python
-from enum import Enum,unique
+from enum import Enum, unique
+
 
 @unique
 class Weekday(Enum):
@@ -881,19 +884,118 @@ class Weekday(Enum):
     Fri = 5
     Sat = 6
 
-Weekday.Sun      # Weekday.Sun
 
-Weekday(1)       # Weekday.Mon
+Weekday.Sun  # Weekday.Sun
+
+Weekday(1)  # Weekday.Mon
 ```
+
 ### 6. <span id  = '###66'>使用元类</span>
+
 > 动态生成类
+
 ```python
 
-def fn(self,name):
-  print("say",name)
-  
+def fn(self, name):
+    print("say", name)
+
+
 # type(类名，继承父类（元组方式），绑定方法)
 Hello = type('Hello', (object,), dict(hello=fn))
 h = Hello()
 h.hello('Aloha')  # say Aloha
+```
+
+## 7. <span id = '##7'>错误、调试和测试</span>
+
+### 1. <span id = '###71'>错误处理</span>
+
+> 当出现错误时，返回错误码的形式固然可以，但是层层上报的话会很啰嗦，
+> 可以通过`try...except...finally...`的错误处理机制
+
+> 可以只在需要的地方做错误处理，不必每层都加`try except`
+
+```python
+# 格式如下：
+try:
+    # do some thing
+    pass
+except ValueError as e:
+    # catch error
+    pass
+except TypeError as e:
+    # catch other
+    pass
+
+# 如果没有错误，也就是正确执行了try，会走这里
+else:
+    pass
+
+# 如果设置，则无论正确错误都会走到这里
+finally:
+    pass
+```
+
+#### 1.1 <span id = '####711'>logging、raise</span>
+
+```python
+import logging
+
+
+class ZeroError(ZeroDivisionError):
+    pass
+
+
+try:
+    1100 / 0
+except ZeroDivisionError as e:
+    print('出错了')
+    logging.exception(e)
+    raise ZeroError('自己包装的zero', e)
+```
+
+### 2. <span id = '###72'>调试</span>
+
+> 通过`print()`或`断言`方式  
+> 凡是可以通过print调试的，都可以替换为断言
+> > 最方便的还是IDE
+
+```python
+
+def foo(n):
+    assert n != 0, '%d is zero' % n
+    return 10 / n
+
+
+# assert会断言n!=0，失败则抛出 AssertionError
+foo(0)
+```
+
+### 3. <span id = '###73'>单元测试</span>
+
+```python
+import unittest
+
+
+class Test(unittest.TestCase):
+  
+    # 在每次test方法之前调用
+    def setUp(self) -> None:
+      pass
+    
+    # 在每次test方法之后调用
+    def tearDown(self) -> None:
+      pass
+
+    def test_init(self):
+        L = [1]
+        self.assertTrue(isinstance(L, list))
+        self.assertEqual(L[0], 1)
+        with self.assertRaises(IndexError):
+            L[2]
+
+
+if __name__ == '__main__':
+    unittest.main()  # 运行测试
+
 ```

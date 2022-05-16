@@ -43,12 +43,12 @@
    - 定制类 `__str__、__repr__、__iter__、__next__、__getitem__、__getattr__、__call__`
    - 使用枚举类
    - 使用元类 `？？？`
-8. 错误、调试和测试（进行中）
-   - 错误处理
+8. 错误、调试和测试（已完成）
+   - 错误处理 `try...except...else...finally`
    - 调试
-   - 单元测试
+   - 单元测试 `unittest.main()`
    - 文档测试
-9. IO编程
+9. IO编程（进行中）
    - 文档读写
    - StringIO和BytesIO
    - 操作文件和目录
