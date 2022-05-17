@@ -978,14 +978,14 @@ import unittest
 
 
 class Test(unittest.TestCase):
-  
+
     # 在每次test方法之前调用
     def setUp(self) -> None:
-      pass
-    
+        pass
+
     # 在每次test方法之后调用
     def tearDown(self) -> None:
-      pass
+        pass
 
     def test_init(self):
         L = [1]
@@ -997,5 +997,72 @@ class Test(unittest.TestCase):
 
 if __name__ == '__main__':
     unittest.main()  # 运行测试
-
 ```
+
+## 8. <span id = '##8'>IO编程</span>
+
+### 1. <span id = '###81'>文件读写</span>
+
+```python
+# with用法
+with open('demo.txt', 'r') as f:
+    f.read()  # 读全部
+    f.readline()  # 读一行
+    for line in f.readlines():  # 返回全部
+        line.strip()  # 去除\n
+
+with open('demo.txt', 'w') as f:
+    f.write('ddd')
+```
+
+### 2. <span id = '###82'>StringIO和BytesIO</span>
+
+> 这两个类可以使数据在内存中操作，而不必接触文件
+
+```python
+from io import StringIO
+from io import BytesIO
+
+fs = StringIO()
+fs.write("Hello")
+fs.write(" World!")
+fs.getvalue()  # Hello World!
+
+fs = StringIO("Hi LiLei!")
+fs.read()  # Hi LiLei!
+
+fb = BytesIO()
+fb.write(r'Hello')
+fb.getvalue()
+
+fb = BytesIO('中文'.encode('utf-8'))
+fb.read().decode('utf-8')
+```
+
+### 3. <span id = '###83'>操作文件和目录</span>
+```python
+import os
+
+# 这些都是对路径操作的
+os.path.join('.','file.txt')   #拼接路径
+os.path.split('file_path')     #拆分路径，分为两段，首段文件的父路径，后段文件名
+os.path.splitext('file_path')  # 分为两段，尾段是后缀名，前段是剩下部分
+os.path.abspath('file_path')   # 绝对路径
+os.path.isfile('file_path')    # 是否是文件
+os.path.isdir('file_path')     # 是否是文件夹
+os.rmdir('dir_path')           # 删除文件夹
+os.mkdir('dir_path')           # 创建文件夹
+open('file_path','w')          # 创建文件
+os.remove('file_path')         # 删除文件
+os.rename('file_path','file2_path')  #命名文件
+
+from pathlib import Path
+file_p = os.path.abspath('.')  #获取当下的绝对路径
+file_path = Path(file_p)
+file_path.is_file()
+file_path.is_dir()
+file_path.rmdir()
+file_path.mkdir()
+file_path.rename()
+```
+### 4. <span id = '###84'>序列化</span>
