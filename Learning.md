@@ -1040,24 +1040,26 @@ fb.read().decode('utf-8')
 ```
 
 ### 3. <span id = '###83'>操作文件和目录</span>
+
 ```python
 import os
 
 # 这些都是对路径操作的
-os.path.join('.','file.txt')   #拼接路径
-os.path.split('file_path')     #拆分路径，分为两段，首段文件的父路径，后段文件名
+os.path.join('.', 'file.txt')  # 拼接路径
+os.path.split('file_path')  # 拆分路径，分为两段，首段文件的父路径，后段文件名
 os.path.splitext('file_path')  # 分为两段，尾段是后缀名，前段是剩下部分
-os.path.abspath('file_path')   # 绝对路径
-os.path.isfile('file_path')    # 是否是文件
-os.path.isdir('file_path')     # 是否是文件夹
-os.rmdir('dir_path')           # 删除文件夹
-os.mkdir('dir_path')           # 创建文件夹
-open('file_path','w')          # 创建文件
-os.remove('file_path')         # 删除文件
-os.rename('file_path','file2_path')  #命名文件
+os.path.abspath('file_path')  # 绝对路径
+os.path.isfile('file_path')  # 是否是文件
+os.path.isdir('file_path')  # 是否是文件夹
+os.rmdir('dir_path')  # 删除文件夹
+os.mkdir('dir_path')  # 创建文件夹
+open('file_path', 'w')  # 创建文件
+os.remove('file_path')  # 删除文件
+os.rename('file_path', 'file2_path')  # 命名文件
 
 from pathlib import Path
-file_p = os.path.abspath('.')  #获取当下的绝对路径
+
+file_p = os.path.abspath('.')  # 获取当下的绝对路径
 file_path = Path(file_p)
 file_path.is_file()
 file_path.is_dir()
@@ -1065,4 +1067,58 @@ file_path.rmdir()
 file_path.mkdir()
 file_path.rename()
 ```
+
 ### 4. <span id = '###84'>序列化</span>
+
+> 为了便于将对象和部分数据类型长久存储，可以使用`序列化`或`JSON`
+>
+
+> json的序列化或反序列化生成的是dict对象，所以需要提供`class->dict`和`dict->class`的方法
+
+```python
+import pickle
+
+d = dict(name='wang', age=18)
+# 存取文件    
+with open('f2.txt', 'wb') as f:
+    pickle.dump(d, f)  # 序列化并存入文件中
+
+with open('f2.txt', 'rb') as f:
+    d = pickle.load(f)  # 反序列化
+
+# 仅序列化
+db = pickle.dumps(d)  # 序列化
+d = pickle.loads(db)  # 反序列化
+
+# ------------------------- json -----------------------
+import json
+
+# 存取文件
+with open('f2.txt', 'w') as f:
+    json.dump(d, f)
+
+with open('f2.txt', 'r') as f:
+    d = json.load(f)
+
+# 仅json
+db = json.dumps(d)  # json
+d = json.loads(db)
+
+# class json
+from hello import Hello
+
+
+def hello2dict(hello):
+    return dict(hel=hello.hel)
+
+
+def dict2hello(d):
+    return Hello(d['hel'])
+
+
+h = Hello('yahoo')
+db = json.dumps(h, default=hello2dict)
+h = json.loads(db, dict2hello)
+
+
+```

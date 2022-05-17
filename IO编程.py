@@ -56,16 +56,18 @@ from pathlib import Path
 def find_file(root_path, name):
     L = []
     for f in os.listdir(root_path):
-        if os.path.isfile(f):
-            if name in os.path.split(f):
-                L.append(f)
-        elif os.path.isdir(f):
+        if os.path.isdir(f):
             result = find_file(f, name)
+            if len(result) > 0:
+                L = L + result
+        else:
+            if name in os.path.split(f)[1]:
+                L.append(f)
 
     return L
 
 
-if __name__ == "__main__":
+def demo_file():
     print(os.name)
     root_project = os.path.abspath('.')
     print(root_project)
@@ -98,4 +100,57 @@ if __name__ == "__main__":
         print(os.path.split(f1)[0])
         os.rename(f1, os.path.join(os.path.split(f1)[0], 'f2.txt'))
 
-    print(find_file(root_project, 'f2'))
+    print(find_file(root_project, '2'))
+
+
+import pickle
+import json
+from hello import Hello
+
+
+def hello2dict(hel):
+    return dict(hel=hel.hel)
+
+
+def dict2hello(d):
+    return Hello(d['hel'])
+
+
+if __name__ == "__main__":
+    d = dict(name='wang', age=18)
+    t = pickle.dumps(d)
+    print(t)
+    print(pickle.loads(t))
+    with open('f2.txt', 'wb') as f:
+        pickle.dump(d, f)
+
+    with open('f2.txt', 'rb') as f:
+        d = pickle.load(f)
+        print(d)
+
+    # ------------------------------------- json --------------------------------
+    dj = json.dumps(d)
+    print(dj)
+    print(json.loads(dj))
+
+    with open('f2.txt', 'w') as f:
+        json.dump(d, f)
+
+    with open('f2.txt', 'r') as f:
+        d = json.load(f)
+        print(d)
+
+    j = '{"age":18,"person":true,"friends":[{"name":"小刚"},{"name":"梨花"}]}'
+    print(json.loads(j))
+
+    h = Hello('yaho')
+    hd = json.dumps(h, default=hello2dict)
+    print(hd)
+    print(json.loads(hd, object_hook=dict2hello))
+
+    with open('f2.txt', 'w') as f:
+        json.dump(h, f, default=hello2dict)
+
+    with open('f2.txt', 'r') as f:
+        h = json.load(f, object_hook=dict2hello)
+        print(h)

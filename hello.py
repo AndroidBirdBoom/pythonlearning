@@ -5,3 +5,10 @@ class Hello(object):
 
     def hello(self):
         print("say", self._hel)
+
+    @property
+    def hel(self):
+        return self._hel
+
+    def __str__(self):
+        return 'Hello(%s)' % self._hel
