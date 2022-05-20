@@ -92,7 +92,7 @@ def wait_ts(l):
         t.join()
 
 
-if __name__ == "__main__":
+def demo_thread():
     t = threading.Thread(target=loop, args=(3,), name='LoopThread')
     t.start()
     t.join()
@@ -114,7 +114,6 @@ if __name__ == "__main__":
     # 假定这是你的银行存款:
     balance = 0
 
-
     def change_it(n):
         lock.acquire()
         # 先存后取，结果应该为0:
@@ -123,11 +122,9 @@ if __name__ == "__main__":
         balance = balance - n
         lock.release()
 
-
     def run_thread(n):
         for i in range(2000000):
             change_it(n)
-
 
     t1 = threading.Thread(target=run_thread, args=(5,))
     t2 = threading.Thread(target=run_thread, args=(8,))
@@ -136,3 +133,26 @@ if __name__ == "__main__":
     t1.join()
     t2.join()
     print(balance)
+
+
+local_shool = threading.local()
+
+
+def process_student():
+    std = local_shool.student
+    print("Thread is %s,and stu = %s" % (threading.current_thread().name, std))
+
+
+def process_thread(name):
+    local_shool.student = name
+    process_student()
+
+
+if __name__ == "__main__":
+    t1 = threading.Thread(target=process_thread, args=('ALice',), name='T1')
+    t2 = threading.Thread(target=process_thread, args=('Bob',), name='T2')
+    t1.start()
+    t2.start()
+    t1.join()
+    t2.join()
+    print("ALL DONE!")
