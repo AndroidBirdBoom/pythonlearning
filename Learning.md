@@ -1238,14 +1238,42 @@ def fun_print():
     name = thread_local.name  # 获取当前Thread的内容
     print(name)
 
+
 t1 = threading.Thread(target=fun_thread, args=('Bob',), name='T1')
 t2 = threading.Thread(target=fun_thread, args=('ALice',), name='T2')
-t1.start()          # Bob
-t2.start()          # ALice   互不影响
+t1.start()  # Bob
+t2.start()  # ALice   互不影响
 t1.join()
 t2.join()
 ```
 
 ### 4. <span id = '###94'>进程 VS 线程</span>
 
-### 5. <span id = '###95'>分布式进程</span>  
+### 5. <span id = '###95'>分布式进程</span>
+
+## 10. <span id = '##10'>正则表达式</span>
+
+> 按照某一给定的规则来判断字符串是否匹配
+
+|   符号   |                作用                 |     备注      |
+|:------:|:---------------------------------:|:-----------:|
+|   .    |    匹配任何一个字符，除了\n，要匹配\n需要中[.\n]    |  py.(py!)   |
+|   ?    |             匹配0-1个字符              ||
+|   *    |             匹配0-n个字符              | p*(p00djfd) |
+|   +    |             匹配1-n个字符              ||
+| [^abc] |            除了abc之外的字符             ||
+|   ^    |               匹配的开头               ||
+|   $    |               匹配的结尾               ||
+|   []   |             匹配[]中的一个              |  \[0-9](2)  |
+|   a&#124;b   |               匹配a或b               | c&#124;d(c) |
+|  {n}   |              匹配n个字符               | \d{3}(123)  |
+| {n,m}  |             匹配n-m个字符              | \w{1,3}(ad) |
+|   \d   |              匹配一个数字               |  00\d(005)  |
+|   \D   |              匹配一个非数字              ||
+|   \w   | 匹配一个字母或数字或下划线<br/>=[0-9A-Za-z\\_] |  00\w(00A)  |
+|   \s   |     匹配一个空格=[\\f\\n\\r\\t\\v]      |    \s( )    |
+|   \    |             配合特殊字符使用              |   \\-(-)    |
+
+```python
+
+```
