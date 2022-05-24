@@ -1275,5 +1275,23 @@ t2.join()
 |   \    |             配合特殊字符使用              |   \\-(-)    |
 
 ```python
+import re
 
+# 匹配
+if re.match(r'^\d{3}\-\d{3,7}','020-3445'):
+    print("match")
+else:
+    print("not match")
+
+# 分割字符
+l = re.split(r'\s+','a b c ddd   lfd fd')
+
+# 分组
+p = r'^(\d{3})\-(\d{3,8})$'
+l = re.match(p,'010-3442')       # (010,3442)
+
+# 编译
+re_phone = re.compile(r'^(\d{3})\-(\d{3,8})$')
+if t:=re_phone.match('010-34544'):
+  print(t.groups())
 ```
