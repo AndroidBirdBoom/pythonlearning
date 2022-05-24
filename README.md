@@ -48,17 +48,17 @@
    - 调试
    - 单元测试 `unittest.main()`
    - 文档测试
-9. IO编程（进行中）
-   - 文档读写
+9. IO编程（已完成）
+   - 文件读写 `open`
    - StringIO和BytesIO
-   - 操作文件和目录
-   - 序列化
-10. 进程和线程
-    - 多进程
-    - 多线程
-    - ThreadLocal
+   - 操作文件和目录 `join、split、splittest、mkdir、rmdir、abspath、isfile、isdir`
+   - 序列化 `dump、load、dumps、loads`
+10. 进程和线程（已完成）
+    - 多进程 `Process Pool`
+    - 多线程 `Thread`
+    - ThreadLocal `threading.local()`
     - 进程 VS 线程
     - 分布式进程
-11. 正则表达式
-12. 常用内建模块
+11. 正则表达式（已完成） `match、search、split、groups`
+12. 常用内建模块（进行中）
 13. 常用第三方模块
