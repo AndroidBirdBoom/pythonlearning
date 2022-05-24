@@ -71,3 +71,11 @@ if __name__ == "__main__":
     print(is_valid_email('bill.gates@microsoft.com'))
     print(name_of_email('<Tom Paris> tom@voyager.org'))
     print(name_of_email('bob@example.com'))
+
+    print(re.search(r'com', 'www.baidu.com').span())
+
+    print(re.sub(r'\d+', '@', '121kl402.com', 1))
+
+    phone = "2004-959-559 # 这是一个国外电话号码"
+    print(re.sub(r'#.*', '', phone, 0))
+    print(re.sub(r'\D+', "", phone, 0))

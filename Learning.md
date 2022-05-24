@@ -1294,4 +1294,14 @@ l = re.match(p,'010-3442')       # (010,3442)
 re_phone = re.compile(r'^(\d{3})\-(\d{3,8})$')
 if t:=re_phone.match('010-34544'):
   print(t.groups())
+
+# 查找
+if t:=re.search('com','www.google.com'):
+    print(t.span())                        # (10,13)
+re.match('com','www.baidu.com')            # None
+
+# 替换
+phone = "2004-959-559 # 这是一个国外电话号码"
+print(re.sub(r'#.*', '', phone, 0))         # 2004-959-559
+
 ```
