@@ -70,7 +70,22 @@
 
 [正则表达式](###10)  
 [常用内建模块](###11)  
-[常用第三方模块](###12)
+- [datetime](####111) 
+- [collections](####112) 
+- [base64](####113) 
+- [struct](####114) 
+- [hashlib](####115) 
+- [hmac](####116) 
+- [itertools](####117) 
+- [contextlib](####118) 
+- [urllib](####119) 
+- [XML](####1110) 
+- [HTMLParser](####1111)   
+[常用第三方模块](###12)  
+- [Pillow](####121) 
+- [requests](####122) 
+- [chardet](####123) 
+- [psutil](####124)
 
 ## <span id = '##1'>函数</span>
 
@@ -1305,3 +1320,26 @@ phone = "2004-959-559 # 这是一个国外电话号码"
 print(re.sub(r'#.*', '', phone, 0))         # 2004-959-559
 
 ```
+
+## <span id = '##11'>常见内建模块</span>
+### 1. <span id = '###111'>datetime</span>
+```python
+
+```
+### 2. <span id = '###112'>collections</span>
+### 3. <span id = '###113'>base64</span>
+### 4. <span id = '###114'>struct</span>
+### 5. <span id = '###115'>hashlib</span>
+### 6. <span id = '###116'>hmac</span>
+### 7. <span id = '###117'>itertools</span>
+### 8. <span id = '###118'>contextlib</span>
+### 9. <span id = '###119'>urllib</span>
+### 10. <span id = '###1110'>XML</span>
+### 11. <span id = '###1111'>HTMLParser</span> 
+
+## <span id = '##12'>常用第三方模块</span>  
+
+### 1. <span id = '###121'>Pillow</span>
+### 2. <span id = '###122'>requests</span>
+### 3. <span id = '###123'>chardet</span>
+### 4. <span id = '###124'>psutil</span>
