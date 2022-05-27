@@ -3,8 +3,8 @@
 - [格式](####1)
 - [返回多个值](####2)
 - [函数参数](####3)
-  - [可变参数](#####1)
-  - [关键字参数](#####2)
+    - [可变参数](#####1)
+    - [关键字参数](#####2)
 
 [高级特性](###2)
 
@@ -37,18 +37,18 @@
 - [使用@property](####62)
 - [多重继承](####63)
 - [定制类](####64)
-  - [\_\_str__、\_\_repr__](#####641)
-  - [\_\_iter__、\_\_next__](#####642)
-  - [\_\_getitem__](#####643)
-  - [\_\_getattr__](#####644)
-  - [\_\_call__](#####645)
+    - [\_\_str__、\_\_repr__](#####641)
+    - [\_\_iter__、\_\_next__](#####642)
+    - [\_\_getitem__](#####643)
+    - [\_\_getattr__](#####644)
+    - [\_\_call__](#####645)
 - [使用枚举类](####65)
 - [使用元类](####66)
 
 [错误、调试和测试](###7)
 
 - [错误处理](####71)
-  - [logging、raise](#####711)
+    - [logging、raise](#####711)
 - [调试](####72)
 - [单元测试](####73)
 - [文档测试](####74)
@@ -96,8 +96,8 @@
 
 ```python
 def function_name(a, b):
-  # 如果不加return，默认返回None.
-  return 
+    # 如果不加return，默认返回None.
+    return 
 ```
 
 ### <span id = '###2'>2. 返回多个值</span>
@@ -112,7 +112,7 @@ def function_name(a, b):
 ```python
 # 默认参数，且必须放在必选参数后面
 def power(x, n=2, hint=""):
-  return
+    return
 
 
 # 默认参数可以不写
@@ -129,10 +129,10 @@ power(10, hint="默认参数", n=9)
 
 ```python
 def calc(*numbers):
-  s = 0
-  for n in numbers:
-    s += n
-  print("sum = ", s)
+    s = 0
+    for n in numbers:
+        s += n
+    print("sum = ", s)
 
 
 calc(1, 3, 4)
@@ -151,25 +151,25 @@ calc(1, 3, 4, 5, city="北京", age=18)
 
 ```python
 def person(name, age, **center):
-  # 查看center中的元素
-  if 'city' in center:
-    print("city = ", center.get('city'))
+    # 查看center中的元素
+    if 'city' in center:
+        print("city = ", center.get('city'))
 
-  # 命名关键字通过以下方式：
+    # 命名关键字通过以下方式：
 
 
 def person(name, age, *, code, city):
-  pass
+    pass
 
 
 # 如果含有可变参数的话，后面的关键字可以不带*
 def person(name, age, *args, city, code):
-  pass
+    pass
 
 
 # 同样的，也可以掺杂默认参数使用
 def person(name, age, *, city="北京", code):
-  pass
+    pass
 
 
 person("hahah")
@@ -215,18 +215,18 @@ isinstance(d, Iterable)
 
 # 默认遍历的是key，即a,b,c
 for key in d:
-  print(key)
+    print(key)
 
 # 遍历的是1,2,3
 for value in d.values():
-  print(value)
+    print(value)
 
 # 遍历的是('a':1)、('b':2)、('c':3)
 for item in d.items():
-  print(item)
+    print(item)
 
 for s in 'ABC':
-  print(s)
+    print(s)
 ```
 
 ### 3. <span id ='###23'>列表生成器</span>
@@ -237,7 +237,7 @@ for s in 'ABC':
 # 下列代码生成 1*1，2*2...等值
 L = []
 for x in range(1, 11):
-  L.append(x * x)
+    L.append(x * x)
 
 # 上述代码通过列表生成器实现如下：
 L = [x * x for x in range(1, 11)]
@@ -279,16 +279,16 @@ next(s)
 
 # 也可以通过for遍历数据，并且不会产生上述错误
 for n in s:
-  print(n)
+    print(n)
 
 
 # 下面是generator function，只有调用next时，才运行，运行到yield停止，除非再次调用next
 # 或者利用 for 循环遍历
 def triangles():
-  L = [1]
-  while True:
-    yield L
-    L = [1] + [L[n] + L[n + 1] for n in range(len(L) - 1)] + [1]
+    L = [1]
+    while True:
+        yield L
+        L = [1] + [L[n] + L[n + 1] for n in range(len(L) - 1)] + [1]
 ```
 
 ### 5. <span id ='###25'>迭代器</span>
@@ -327,15 +327,15 @@ isinstance(g, Iterable)  # True
 ```python
 # 求 (1 + 2) * 3 - 4
 def add(x, y):
-  return x + y
+    return x + y
 
 
 def mul(x, y):
-  return x * y
+    return x * y
 
 
 def sub(x, y):
-  return x - y
+    return x - y
 
 
 sub(mul(add(1, 2), 3), 4)
@@ -373,10 +373,10 @@ sorted(['zbc', 'Adk', 'bdd'], key=str.lower, reverse=True)  # ['zbc','bdd','Adk'
 ```python
 # 定义了一个延迟加载的函数
 def lazy_add(x, y):
-  def add():
-    return x + y
+    def add():
+        return x + y
 
-  return add
+    return add
 
 
 # t是一个函数
@@ -393,7 +393,7 @@ t()
 
 ```python
 def build(x, y):
-  return lambda: x, y
+    return lambda: x, y
 ```
 
 ### 4. <span id = '###34'>装饰器</span>
@@ -407,16 +407,16 @@ import functools
 
 # 在原先sum基础上打印信息
 def log(fun):
-  # 将fun信息复制到wrapper中，防止未知错误
-  @functools.wraps(fun)
-  def wrapper(*args, **kw):
-    print("call %s():" % fun.__name__)
-    return fun(*args, **kw)
+    # 将fun信息复制到wrapper中，防止未知错误
+    @functools.wraps(fun)
+    def wrapper(*args, **kw):
+        print("call %s():" % fun.__name__)
+        return fun(*args, **kw)
 
 
 @log
 def sum(a, b):
-  return a + b
+    return a + b
 
 
 # 函数对象__name__可以拿到函数的名字
@@ -460,7 +460,7 @@ int2('10001', base=10)
 __author__ = 'Wang Gang'  # 作者
 
 if __name__ == '__main__':  # 作为模块内的测试用
-  pass
+    pass
 ````
 
 ## 5. <span id = '##5'>面向对象编程</span>
@@ -480,20 +480,20 @@ if __name__ == '__main__':  # 作为模块内的测试用
 
 ```python
 class Person(object):
-  pass
+    pass
 
 
 class Student(Person):
 
-  # self 表示创建的实例本身，
-  # 对self的操作 = 对实例操作
-  def __init__(self, name, score):
-    self.__name = name  # 对变量添加__表示私有化，外部无法访问到（一定程度上）
-    self.__score = score
+    # self 表示创建的实例本身，
+    # 对self的操作 = 对实例操作
+    def __init__(self, name, score):
+        self.__name = name  # 对变量添加__表示私有化，外部无法访问到（一定程度上）
+        self.__score = score
 
-  # 封装：将变量封装起来，直接调用，透明
-  def to_string(self):
-    print("名字是：%s，分数为：%s" % (self.__name, self.__score))
+    # 封装：将变量封装起来，直接调用，透明
+    def to_string(self):
+        print("名字是：%s，分数为：%s" % (self.__name, self.__score))
 
 
 # 创建实例
@@ -510,10 +510,10 @@ tom = Student('tom', 98)
 ```python
 class Person(object):
 
-  def __init__(self, name, score):
-    # __name 外部无法通过实例调用
-    self.__name = name
-    self._score = score
+    def __init__(self, name, score):
+        # __name 外部无法通过实例调用
+        self.__name = name
+        self._score = score
 
 
 tom = Person()
@@ -543,24 +543,24 @@ tom._score
 ```python
 class Animal(object):
 
-  def sing(self):
-    print("叫声")
+    def sing(self):
+        print("叫声")
 
 
 class Dog(Animal):
 
-  def sing(self):
-    print("汪汪")
+    def sing(self):
+        print("汪汪")
 
 
 class Cat(Animal):
 
-  def sing(self):
-    print("喵喵")
+    def sing(self):
+        print("喵喵")
 
 
 def call_sing(animal):
-  animal.sing()
+    animal.sing()
 
 
 cat = Cat()
@@ -583,15 +583,15 @@ import types
 
 class MyObject(object):
 
-  def __init__(self):
-    self.x = 9
+    def __init__(self):
+        self.x = 9
 
-  def power(self):
-    return self.x * self.x
+    def power(self):
+        return self.x * self.x
 
 
 def fun():
-  pass
+    pass
 
 
 type(lambda x: x) == types.LambdaType  # True
@@ -625,7 +625,7 @@ getattr(obj, 'power')()  # 返回方法，并调用
 
 ```python
 class Person(object):
-  name = 'tom'
+    name = 'tom'
 
 
 obj = Person()
@@ -662,11 +662,11 @@ from types import MethodType
 
 
 class Student():
-  __slots__ = ('age', 'score')
+    __slots__ = ('age', 'score')
 
 
 def set_score(self, score):
-  self.score = score
+    self.score = score
 
 
 tom = Student()
@@ -690,8 +690,8 @@ jack.name = 'jack'  # 报错
 
 
 class LiHua(Student):
-  # 此时，LiHua类可以设置name,age和score属性了
-  __slots__ = 'name'
+    # 此时，LiHua类可以设置name,age和score属性了
+    __slots__ = 'name'
 ```
 
 ### 2. <span id = '###62'>使用@property</span>
@@ -702,21 +702,21 @@ class LiHua(Student):
 ```python
 class Person(object):
 
-  def __init__(self):
-    self._age = None
+    def __init__(self):
+        self._age = None
 
-  @property
-  def get_age(self):
-    return self._age
+    @property
+    def get_age(self):
+        return self._age
 
-  @get_age.setter
-  def set_age(self, age):
-    if age <= 0:
-      raise Exception("不能赋负值！")
-    elif age > 200:
-      raise Exception("年龄不能过大！")
-    else:
-      self._age = age
+    @get_age.setter
+    def set_age(self, age):
+        if age <= 0:
+            raise Exception("不能赋负值！")
+        elif age > 200:
+            raise Exception("年龄不能过大！")
+        else:
+            self._age = age
 
 
 d = Person()
@@ -733,36 +733,36 @@ d.get_age  # 18
 
 class Person(object):
 
-  def __init__(self, name, age):
-    self._name = name
-    self._age = age
+    def __init__(self, name, age):
+        self._name = name
+        self._age = age
 
-  @property
-  def name(self):
-    return self._name
+    @property
+    def name(self):
+        return self._name
 
-  @property
-  def age(self):
-    return self._age
+    @property
+    def age(self):
+        return self._age
 
 
 class EnglishMixIn(object):
 
-  def language(self):
-    print("I speak English!")
+    def language(self):
+        print("I speak English!")
 
 
 class Tom(Person, EnglishMixIn):
 
-  def __init__(self, name, age, id):
-    super().__init__(name, age)  # 这种方式不需要加self
-    # Person.__init__(self,name,age)    这种方式需要加self
-    self._id = id
+    def __init__(self, name, age, id):
+        super().__init__(name, age)  # 这种方式不需要加self
+        # Person.__init__(self,name,age)    这种方式需要加self
+        self._id = id
 
-  def to_string(self):
-    print("我的名字是：%s，年龄为：%d" % (self.name, self.age))
-    EnglishMixIn.language(self)
-    # super().language()
+    def to_string(self):
+        print("我的名字是：%s，年龄为：%d" % (self.name, self.age))
+        EnglishMixIn.language(self)
+        # super().language()
 ```
 
 ### 4. <span id = '###64'>定制类</span>
@@ -774,16 +774,16 @@ class Tom(Person, EnglishMixIn):
 ```python
 class Person(object):
 
-  def __init__(self, name):
-    self._name = name
+    def __init__(self, name):
+        self._name = name
 
-  # 该方法在打印Person('name')时调用
-  def __str__(self):
-    return 'My name is ', self._name
+    # 该方法在打印Person('name')时调用
+    def __str__(self):
+        return 'My name is ', self._name
 
-  # 该方法在打印实例时调用
-  def __repr__(self):
-    self.__str__()
+    # 该方法在打印实例时调用
+    def __repr__(self):
+        self.__str__()
 
 
 print(Person('Tom'))  # 调用__str__方法
@@ -799,25 +799,25 @@ print(tom)  # 调用__repr__方法
 ```python
 class Fib(object):
 
-  def __init__(self):
-    self.a, self.b = 0, 1
+    def __init__(self):
+        self.a, self.b = 0, 1
 
-  # 获得迭代的变量
-  def __iter__(self):
-    return self
+    # 获得迭代的变量
+    def __iter__(self):
+        return self
 
-  # next()方法获取的值
-  def __next__(self):
-    self.a, self.b = self.b, self.a + self.b
-    if self.a > 100:
-      raise StopIteration()
-    return self.a
+    # next()方法获取的值
+    def __next__(self):
+        self.a, self.b = self.b, self.a + self.b
+        if self.a > 100:
+            raise StopIteration()
+        return self.a
 
 
 b = Fib()
 
 for n in b:
-  print(n)
+    print(n)
 ```
 
 #### 4.3 <span id = '####643'>\_\_getitem__</span>
@@ -827,23 +827,23 @@ for n in b:
 ```python
 class Fib(object):
 
-  def __getitem__(self, item):
-    a, b = 1, 1
-    if isinstance(item, int):
-      for x in range(item):
-        a, b = b, a + b
-      return a
-    elif isinstance(item, slice):  # 判断是不是切片
-      L = []
-      start = item.start
-      end = item.stop
-      if start is None:
-        start = 0
-      for n in range(end):
-        if n >= start:
-          L.append(a)
-        a, b = b, a + b
-      return L
+    def __getitem__(self, item):
+        a, b = 1, 1
+        if isinstance(item, int):
+            for x in range(item):
+                a, b = b, a + b
+            return a
+        elif isinstance(item, slice):  # 判断是不是切片
+            L = []
+            start = item.start
+            end = item.stop
+            if start is None:
+                start = 0
+            for n in range(end):
+                if n >= start:
+                    L.append(a)
+                a, b = b, a + b
+            return L
 
 
 b = Fib()
@@ -858,11 +858,11 @@ b[1:3]  # [1,2]
 ```python
 class Person(object):
 
-  def __getattr__(self, item):
-    if item == 'score':  # 返回默认值
-      return 98
-    elif item == 'age':  # 返回函数
-      return lambda x: x + 1
+    def __getattr__(self, item):
+        if item == 'score':  # 返回默认值
+            return 98
+        elif item == 'age':  # 返回函数
+            return lambda x: x + 1
 
 
 tom = Person()
@@ -877,11 +877,11 @@ tom.age(333)  # 334
 ```python
 class Student(object):
 
-  def __init__(self, name):
-    self._name = name
+    def __init__(self, name):
+        self._name = name
 
-  def __call__(self, *args, **kwargs):
-    print("My name is ", self._name)
+    def __call__(self, *args, **kwargs):
+        print("My name is ", self._name)
 
 
 tom = Student('tom')
@@ -900,13 +900,13 @@ from enum import Enum, unique
 
 @unique
 class Weekday(Enum):
-  Sun = 0
-  Mon = 1
-  Tue = 2
-  Wed = 3
-  Thu = 4
-  Fri = 5
-  Sat = 6
+    Sun = 0
+    Mon = 1
+    Tue = 2
+    Wed = 3
+    Thu = 4
+    Fri = 5
+    Sat = 6
 
 
 Weekday.Sun  # Weekday.Sun
@@ -921,7 +921,7 @@ Weekday(1)  # Weekday.Mon
 ```python
 
 def fn(self, name):
-  print("say", name)
+    print("say", name)
 
 
 # type(类名，继承父类（元组方式），绑定方法)
@@ -942,22 +942,22 @@ h.hello('Aloha')  # say Aloha
 ```python
 # 格式如下：
 try:
-  # do some thing
-  pass
+    # do some thing
+    pass
 except ValueError as e:
-  # catch error
-  pass
+    # catch error
+    pass
 except TypeError as e:
-  # catch other
-  pass
+    # catch other
+    pass
 
 # 如果没有错误，也就是正确执行了try，会走这里
 else:
-  pass
+    pass
 
 # 如果设置，则无论正确错误都会走到这里
 finally:
-  pass
+    pass
 ```
 
 #### 1.1 <span id = '####711'>logging、raise</span>
@@ -967,15 +967,15 @@ import logging
 
 
 class ZeroError(ZeroDivisionError):
-  pass
+    pass
 
 
 try:
-  1100 / 0
+    1100 / 0
 except ZeroDivisionError as e:
-  print('出错了')
-  logging.exception(e)
-  raise ZeroError('自己包装的zero', e)
+    print('出错了')
+    logging.exception(e)
+    raise ZeroError('自己包装的zero', e)
 ```
 
 ### 2. <span id = '###72'>调试</span>
@@ -987,8 +987,8 @@ except ZeroDivisionError as e:
 ```python
 
 def foo(n):
-  assert n != 0, '%d is zero' % n
-  return 10 / n
+    assert n != 0, '%d is zero' % n
+    return 10 / n
 
 
 # assert会断言n!=0，失败则抛出 AssertionError
@@ -1003,24 +1003,24 @@ import unittest
 
 class Test(unittest.TestCase):
 
-  # 在每次test方法之前调用
-  def setUp(self) -> None:
-    pass
+    # 在每次test方法之前调用
+    def setUp(self) -> None:
+        pass
 
-  # 在每次test方法之后调用
-  def tearDown(self) -> None:
-    pass
+    # 在每次test方法之后调用
+    def tearDown(self) -> None:
+        pass
 
-  def test_init(self):
-    L = [1]
-    self.assertTrue(isinstance(L, list))
-    self.assertEqual(L[0], 1)
-    with self.assertRaises(IndexError):
-      L[2]
+    def test_init(self):
+        L = [1]
+        self.assertTrue(isinstance(L, list))
+        self.assertEqual(L[0], 1)
+        with self.assertRaises(IndexError):
+            L[2]
 
 
 if __name__ == '__main__':
-  unittest.main()  # 运行测试
+    unittest.main()  # 运行测试
 ```
 
 ## 8. <span id = '##8'>IO编程</span>
@@ -1030,13 +1030,13 @@ if __name__ == '__main__':
 ```python
 # with用法
 with open('demo.txt', 'r') as f:
-  f.read()  # 读全部
-  f.readline()  # 读一行
-  for line in f.readlines():  # 返回全部
-    line.strip()  # 去除\n
+    f.read()  # 读全部
+    f.readline()  # 读一行
+    for line in f.readlines():  # 返回全部
+        line.strip()  # 去除\n
 
 with open('demo.txt', 'w') as f:
-  f.write('ddd')
+    f.write('ddd')
 ```
 
 ### 2. <span id = '###82'>StringIO和BytesIO</span>
@@ -1105,10 +1105,10 @@ import pickle
 d = dict(name='wang', age=18)
 # 存取文件    
 with open('f2.txt', 'wb') as f:
-  pickle.dump(d, f)  # 序列化并存入文件中
+    pickle.dump(d, f)  # 序列化并存入文件中
 
 with open('f2.txt', 'rb') as f:
-  d = pickle.load(f)  # 反序列化
+    d = pickle.load(f)  # 反序列化
 
 # 仅序列化
 db = pickle.dumps(d)  # 序列化
@@ -1119,10 +1119,10 @@ import json
 
 # 存取文件
 with open('f2.txt', 'w') as f:
-  json.dump(d, f)
+    json.dump(d, f)
 
 with open('f2.txt', 'r') as f:
-  d = json.load(f)
+    d = json.load(f)
 
 # 仅json
 db = json.dumps(d)  # json
@@ -1133,11 +1133,11 @@ from hello import Hello
 
 
 def hello2dict(hello):
-  return dict(hel=hello.hel)
+    return dict(hel=hello.hel)
 
 
 def dict2hello(d):
-  return Hello(d['hel'])
+    return Hello(d['hel'])
 
 
 h = Hello('yahoo')
@@ -1164,7 +1164,7 @@ from multiprocessing import Process
 
 
 def run_proc(name):
-  print("这个进程叫做：%s(%s)" % (name, os.getpid()))
+    print("这个进程叫做：%s(%s)" % (name, os.getpid()))
 
 
 p1 = Process(target=run_proc, args=('进程1',))
@@ -1176,7 +1176,7 @@ from multiprocessing import Pool
 
 pl = Pool(4)  # 设置进程池运行的进程最大数，默认CPU核数
 for i in range(5):
-  pl.apply_async(run_proc, args=('test1', i))  # 异步创建进程
+    pl.apply_async(run_proc, args=('test1', i))  # 异步创建进程
 
 pl.close()  # 调用此方法后不能再向进程池添加进程（调用join方法必须先调用此方法）
 pl.join()  # 等待所有进程执行完毕
@@ -1187,14 +1187,14 @@ import random, time
 
 
 def write(q):
-  for i in range(5):
-    q.put(i)  # 入队
-    time.sleep(random.random())
+    for i in range(5):
+        q.put(i)  # 入队
+        time.sleep(random.random())
 
 
 def read(q):
-  while True:
-    value = q.get()  # 出队
+    while True:
+        value = q.get()  # 出队
 
 
 q = Queue()
@@ -1220,8 +1220,8 @@ import time, random
 
 
 def run_t(i):
-  time.sleep(random.random())
-  print('%s is running...' % threading.current_thread().name)  # 当前thread
+    time.sleep(random.random())
+    print('%s is running...' % threading.current_thread().name)  # 当前thread
 
 
 t = threading.Thread(target=run_t, args=(1,), name='DemoThread')
@@ -1246,13 +1246,13 @@ thread_local = threading.local()
 
 
 def fun_thread(name):
-  thread_local.name = name  # 将本Thread的数据存下来
-  fun_print()
+    thread_local.name = name  # 将本Thread的数据存下来
+    fun_print()
 
 
 def fun_print():
-  name = thread_local.name  # 获取当前Thread的内容
-  print(name)
+    name = thread_local.name  # 获取当前Thread的内容
+    print(name)
 
 
 t1 = threading.Thread(target=fun_thread, args=('Bob',), name='T1')
@@ -1295,9 +1295,9 @@ import re
 
 # 匹配
 if re.match(r'^\d{3}\-\d{3,7}', '020-3445'):
-  print("match")
+    print("match")
 else:
-  print("not match")
+    print("not match")
 
 # 分割字符
 l = re.split(r'\s+', 'a b c ddd   lfd fd')
@@ -1309,11 +1309,11 @@ l = re.match(p, '010-3442')  # (010,3442)
 # 编译
 re_phone = re.compile(r'^(\d{3})\-(\d{3,8})$')
 if t := re_phone.match('010-34544'):
-  print(t.groups())
+    print(t.groups())
 
 # 查找
 if t := re.search('com', 'www.google.com'):
-  print(t.span())  # (10,13)
+    print(t.span())  # (10,13)
 re.match('com', 'www.baidu.com')  # None
 
 # 替换
@@ -1338,30 +1338,91 @@ datetime.fromtimestamp(1938793749)  # 时间戳->datetime
 datetime.now() + timedelta(hours=10)  # time+10小时
 datetime.now().replace(timezone(timedelta(hours=8)))  # 强制时区为UTC+8
 ```
+
 ### 2. <span id = '###112'>collections</span>
-> #### 1. namedtuple  
-> > 可以理解为一个轻量级的class，并且具有tuple的不变性  
+
+> #### 1. namedtuple
+> > 可以理解为一个轻量级的class，并且具有tuple的不变性
 >
+
 ```python
 from collections import namedtuple
+
 # 生成一个tuple，格式固定
-Point = namedtuple('Point',['x','y'])
-p = Point(10,2)
-p.x   # 直接通过属性取
+Point = namedtuple('Point', ['x', 'y'])
+p = Point(10, 2)
+p.x  # 直接通过属性取
 p.y
 ```
+
 > #### 2. deque
-> >一个加强版的list，本质是一个双向列表  
-> 
-> >目前来看只是删除或添加对头元素比较方便
+> > 一个加强版的list，本质是一个双向列表
+>
+> > 目前来看只是删除或添加对头元素比较方便
+
 ```python
 from collections import deque
-q = deque([2,4,5])
-q.append(3)       # 2,4,5,3
-q.appendleft(1)   # 1,2,4,5,3
-q.pop()           # 1,2,4,5
-q.popleft()       # 2,4,5
+
+q = deque([2, 4, 5])
+q.append(3)  # 2,4,5,3
+q.appendleft(1)  # 1,2,4,5,3
+q.pop()  # 1,2,4,5
+q.popleft()  # 2,4,5
 ```
+
+> #### 3. defaultdict
+> > dict加强版，初始化时设置一个函数来应对key没有的情况，避免报错
+
+```python
+from collections import defaultdict
+
+dd = defaultdict(lambda: 'N/a')
+dd['man'] = 'tom'
+dd.get('man')  # tom
+dd['women']  # N/A
+```
+
+> #### 4. OrderedDict
+> > 可以按照插入顺序原样返回key值，但是并不会对key排序
+
+```python
+from collections import OrderedDict
+
+od = OrderedDict()
+od['a'] = 1
+od[1] = 2
+od['c'] = '3'
+od  # 'a' : 1 , 1 : 2 , 'c' : 3
+```
+
+> #### 5. ChainMap
+>> 又一个加强版的dict，可以往里面放dict，按照放的先后顺序找value，
+> 是一种优先级的ChainMap，越往前的dict先被找到
+
+````python
+from collections import ChainMap
+
+defaults = {'color': 'red', 'user': 'guest'}
+mains = {'user': 'ergou'}
+cm = ChainMap(mains, defaults)
+cm['color']  # red
+cm['user']  # ergou
+````
+
+> #### 6. Counter
+> > 还是加强版的dict，可以统计一个值出现的次数
+
+````python
+from collections import Counter
+
+c = Counter()
+for i in 'ergoo':
+    c[i] += 1
+c  # 'e':1,'r':1,'g':1,'o':2
+c.update('hel')
+c  # 'e':2,'r':1,'g':1,'o':2,'h':1,'l':1
+````
+
 ### 3. <span id = '###113'>base64</span>
 
 ### 4. <span id = '###114'>struct</span>

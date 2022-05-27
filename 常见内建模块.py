@@ -70,3 +70,48 @@ if __name__ == "__main__":
     q.popleft()
     print(q)
 
+    from collections import defaultdict
+
+    dd = defaultdict(lambda: 'N/A', {'k1': 'v12', 'k2': 'v2'})
+    dd['k1'] = 'v1'
+    print(dd.get('k1'))
+    print(dd['k1'])
+    print(dd['k2'])
+
+    d = dict({'k1': 'v1', 'k2': 'v2'})
+    print(d.get('k2'))
+
+    from collections import OrderedDict
+
+    od = OrderedDict()
+    od['a'] = 1
+    od[1] = 3
+    od['2'] = 'fds'
+    print(od)
+    print(od.popitem(last=True))
+
+    from collections import ChainMap
+    import os, argparse
+
+    defaults = {
+        'color': 'red',
+        'user': 'guest'
+    }
+
+    mains = {
+        'user': 'ergou'
+    }
+
+    cm = ChainMap(mains, defaults)
+    print(cm.get('color'))
+    print(cm.get('user'))
+
+    from collections import Counter
+
+    c = Counter()
+    for ch in 'wanggang':
+        c[ch] += 1
+    print(c)
+    print(c.get('w'))
+    c.update('hello')
+    print(c)
