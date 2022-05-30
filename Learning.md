@@ -1429,6 +1429,21 @@ c  # 'e':2,'r':1,'g':1,'o':2,'h':1,'l':1
 
 ### 5. <span id = '###115'>hashlib</span>
 
+> 包含几个常用的加密算法  
+> 注意传入的是byte
+
+```python
+import hashlib
+
+md5 = hashlib.md5()
+md5.update('hello world!'.encode('utf-8'))
+md5.hexdigest()  # 128bit
+
+sha1 = hashlib.sha1()
+sha1.update('hello world!'.encode('utf-8'))
+sha1.hexdigest()  # 140bit
+```
+
 ### 6. <span id = '###116'>hmac</span>
 
 ### 7. <span id = '###117'>itertools</span>

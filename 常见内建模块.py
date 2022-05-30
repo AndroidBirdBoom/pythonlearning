@@ -1,5 +1,8 @@
 from datetime import datetime, timezone, timedelta
-
+import hashlib, random
+import hmac
+import itertools
+from contextlib import contextmanager
 
 def demo_time():
     now = datetime.now()
@@ -51,7 +54,7 @@ def to_timestamp(dt_str, tz_str):
     return dt.timestamp()
 
 
-if __name__ == "__main__":
+def demo_collection():
     from collections import namedtuple
 
     Point = namedtuple('Point', ['x', 'y'])
@@ -115,3 +118,88 @@ if __name__ == "__main__":
     print(c.get('w'))
     c.update('hello')
     print(c)
+
+
+db = {
+    'michael': 'e10adc3949ba59abbe56e057f20f883e',
+    'bob': '878ef96e86145580c38c87f0410ad153',
+    'alice': '99b1c2188db85afee403b1536010c2c9'
+}
+
+
+def calc_md5(password):
+    md5 = hashlib.md5()
+    md5.update(password.encode('utf-8'))
+    return md5.hexdigest()
+
+
+def login(user, password):
+    if db.get(user):
+        return db.get(user) == calc_md5(password)
+
+    return
+
+
+def demo_hashlib():
+    md5 = hashlib.md5()
+    md5.update('how to user md5?'.encode('utf-8'))
+    print(md5.hexdigest(), len(md5.hexdigest()))
+    sha1 = hashlib.sha1()
+    sha1.update('how to user sha1?'.encode('utf-8'))
+    print(sha1.hexdigest(), len(sha1.hexdigest()))
+
+    print(login('michael', '123456'))
+    print(login('bob', 'abc999'))
+    print(login('alice', 'alice2008'))
+
+    print(''.join([chr(random.randint(48, 122)) for i in range(20)]))
+
+    print('hello'.encode('utf-8'))
+    print(b'hello')
+
+    hm = hmac.new(b'hello world', b'message', digestmod='SHA1')
+    print(hm.hexdigest(), len(hm.hexdigest()))
+
+    # natuals = itertools.count(5)
+    # for n in natuals:
+    #     print(n)
+
+
+class Query(object):
+
+    def __init__(self, name):
+        self.name = name
+
+    def __enter__(self):
+        print("enter")
+        return self
+
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        if exc_type:
+            print("error")
+        else:
+            print('end')
+
+    def query(self):
+        print("name is %s" % self.name)
+
+
+class Querynew(object):
+
+    def __init__(self,name):
+        self.name = name
+
+    def query(self):
+        print("name is %s" % self.name)
+
+@contextmanager
+def create_query(name):
+    print('begin')
+    q = Querynew(name)
+    yield q
+    print('exit')
+
+if __name__ == "__main__":
+
+    with create_query('ergou') as f:
+        f.query()
