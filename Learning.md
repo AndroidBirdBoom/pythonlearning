@@ -1451,7 +1451,27 @@ sha1.hexdigest()  # 140bit
 ### 8. <span id = '###118'>contextlib</span>
 
 ### 9. <span id = '###119'>urllib</span>
+> 网络请求框架
 
+```python
+import urllib.parse
+from urllib import request
+
+urls = 'https://www.baidu.com'
+
+with request.urlopen(urls) as f:  # 访问url
+  f.read()  # 获取内容
+
+# GET带参数
+datas = {'account':'ergou','password':'123'}
+req = request.Request(urls+"?"+urllib.parse.urlencode(datas), method='GET')
+with request.urlopen(req) as f:
+  f.read()
+
+# POST传参数
+with request.urlopen(urls,data=urllib.parse.urlencode(datas).encode('utf-8'))
+
+```
 ### 10. <span id = '###1110'>XML</span>
 
 ### 11. <span id = '###1111'>HTMLParser</span>

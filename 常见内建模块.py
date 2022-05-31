@@ -1,8 +1,14 @@
+from __future__ import annotations
+
+import urllib.parse
 from datetime import datetime, timezone, timedelta
 import hashlib, random
 import hmac
 import itertools
 from contextlib import contextmanager
+
+from urllib import request
+
 
 def demo_time():
     now = datetime.now()
@@ -186,11 +192,12 @@ class Query(object):
 
 class Querynew(object):
 
-    def __init__(self,name):
+    def __init__(self, name):
         self.name = name
 
     def query(self):
         print("name is %s" % self.name)
+
 
 @contextmanager
 def create_query(name):
@@ -199,7 +206,117 @@ def create_query(name):
     yield q
     print('exit')
 
-if __name__ == "__main__":
 
+urls = 'http://39.105.30.106:8958/api/im/protocol/info?'
+
+headers = {
+    'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.132 Safari/537.36'
+}
+
+url = 'http://www.baidu.com/urllib.parse.html;python?kw=urllib.parse#module-urllib'
+
+
+def demo_url():
     with create_query('ergou') as f:
         f.query()
+
+    import json
+
+    datas = {'needBody': True, 'type': 1}
+
+    req = request.Request(urls + urllib.parse.urlencode(datas), headers=headers, method='GET')
+    with request.urlopen(req) as f:
+        data = f.read()
+        print(data)
+        print(f.getheaders())
+        fdata = data.decode('utf-8')
+        print(fdata)
+        fd = json.loads(fdata)
+        print(fd)
+        print(fd.get('code'))
+
+    # http://www.baidu.com/urllib.parse.html;python?kw=urllib.parse#module-urllib
+    result = urllib.parse.urlparse(url)
+    print(result)
+
+
+from html.parser import HTMLParser
+from html.entities import name2codepoint
+
+
+class MyHtmlParser(HTMLParser):
+
+    def __init__(self):
+        super(MyHtmlParser, self).__init__()
+        self.collect_data = False
+        self.fi_str = ""
+
+    def handle_starttag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
+        if tag == 'h3' and not self.collect_data:
+            for l in attrs:
+                if 'event-title' in l:
+                    self.collect_data = True
+                    self.fi_str = ""
+
+        if tag == 'time' and not self.collect_data:
+            for l in attrs:
+                if 'datetime' in l:
+                    self.collect_data = True
+                    self.fi_str = ""
+
+        if tag == 'span' and not self.collect_data:
+            for l in attrs:
+                if 'event-location' in l:
+                    self.collect_data = True
+                    self.fi_str = ""
+
+    def handle_endtag(self, tag: str) -> None:
+        if tag == 'h3' and self.collect_data:
+            self.collect_data = False
+            print('会议：', self.fi_str.strip())
+            self.fi_str = ""
+
+        if tag == 'time' and self.collect_data:
+            self.collect_data = False
+            print('时间：', self.fi_str.strip())
+            self.fi_str = ""
+
+        if tag == 'span' and self.collect_data:
+            self.collect_data = False
+            print('地点：', self.fi_str.strip())
+            self.fi_str = ""
+
+    def handle_startendtag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
+        # print('startendtag:', tag)
+        pass
+
+    def handle_data(self, data: str) -> None:
+        self.fi_str += data
+
+    def handle_comment(self, data: str) -> None:
+        # print('comment', data)
+        pass
+
+    def handle_entityref(self, name: str) -> None:
+        # print('entityref:', name)
+        pass
+
+    def handle_charref(self, name: str) -> None:
+        # print('charref:', name)
+        pass
+
+
+if __name__ == "__main__":
+
+    import os
+
+    html_file = 'python_events.txt'
+    if not os.path.exists(html_file) or not os.path.isfile(html_file):
+        with request.urlopen('https://www.python.org/events/python-events/') as r:
+            with open(html_file, 'w', encoding='utf-8') as f:
+                f.write(r.read().decode('utf-8'))
+    else:
+        print('开始分析：=======>')
+        with open(html_file, 'r') as f:
+            parser = MyHtmlParser()
+            parser.feed(f.read())
