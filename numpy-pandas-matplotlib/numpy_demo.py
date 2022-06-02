@@ -2,7 +2,8 @@ import numpy as np
 from numpy import *
 import matplotlib.pyplot as plt
 
-if __name__ == "__main__":
+
+def demo_numpy1():
     d = eye(4)
     print(type(d))
     print(d)
@@ -136,3 +137,74 @@ if __name__ == "__main__":
     print(b)
     c = a[a >= 50]
     print(c)
+
+    a = np.arange(0, 100, 10)
+    b = np.where(a < 50)
+    c = np.where(a >= 50)[0]
+    print(b, type(b))
+    print(c, type(c))
+
+    s = {'fish', 'mouse'}
+    print(s)
+    s.add('fish')
+    print(s)
+
+    d = {(x, x + 1): x for x in range(10)}
+    print(d)
+
+
+if __name__ == "__main__":
+    az = np.array([[11, 12, 13, 14, 15],
+                   [16, 17, 18, 19, 20],
+                   [21, 22, 23, 24, 25],
+                   [26, 27, 28, 29, 30],
+                   [31, 32, 33, 34, 35]])
+
+    print(az[1, 2])
+
+    a = np.zeros((2, 4))
+    print(a)
+
+    b = np.ones((1, 2))
+    print(b)
+
+    c = np.full((2, 2), 3)
+    print(c)
+
+    d = np.eye(3)
+    print(d)
+
+    e = np.random.random((2, 4))
+    print(e)
+
+    a = np.arange(1, 13)
+    print(a)
+    a = a.reshape((3, 4))
+    print(a)
+    b = a[:2, 1:3]
+    print(b)
+    b[1, 1] = 100
+    print(b)
+    print(a)
+
+    a = np.array([[1, 2], [3, 4], [5, 6]])
+    print(a, type(a))
+    indic = [0, 1]
+    print(a[[0, 1, 2], [0, 1, 0]])
+    print(a[indic])
+
+    a = np.array([[1, 2, 3], [4, 5, 6], [7, 8, 9], [10, 11, 12]])
+
+    b = np.array([0, 2, 0, 1])
+
+    c = a[np.arange(4), b]
+    print(c)
+    c += 10
+    print(c, a)
+    a[range(4), b] += 10
+    print(a)
+
+    b = a > 5
+    print(b)
+    print(a[b])
+    print(a[a > 5])
