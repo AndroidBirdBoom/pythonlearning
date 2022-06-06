@@ -70,3 +70,51 @@ b = a > 2  # [[False,False],[True,True]]
 a[b]  # [3,4]，返回的都是True的元素
 
 ```
+
+### 4. 数据类型
+
+> 通过`numpy.array(dtype=)`设置  
+> 通过`np.dtype`获取具体类型
+
+### 5. 数组中的数学
+
+```python
+import numpy as np
+
+x = np.array([1, 2])
+y = np.array([3, 4])
+x + y  # == np.add(x,y)
+x - y  # == np.subtract(x,y)
+x * y  # == np.multiply(x,y)
+x / y  # == np.divide(x,y)
+x.dot(y)  # == np.dot(x,y)
+
+# 转置T
+x.T
+```
+
+### 6. 广播
+
+> 广播需要一定的触发机制以及广播规则。  
+> 总的来说就是先铺满一面（无论是x,y,z），然后再将一面扩展到其他维度。
+
+```python
+import numpy as np
+
+a = np.arange(8).reshape(2, 2, 2)
+b = np.arange(2).reshape(1, 2, 1)
+# 可以将a想象成一个2*2*2的立方体，那么b就是一个1*2*1的一个长方体。
+# 只需要先将b沿x轴扩展为（2,2,1），再沿z轴扩展为（2,2,2）即可！
+a + b  # (2,2,2)  
+
+a = np.ones((2, 2, 3))
+b = np.ones((2, 3))
+# 先将b转置为（1,2,3），再沿x轴扩展为（2,2,3）
+a + b  # (2,2,3)
+
+a = np.ones((1, 4, 3))
+b = np.ones((4, 1, 5))
+a + b  # 报错
+```
+
+## 

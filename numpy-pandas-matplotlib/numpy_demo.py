@@ -208,3 +208,105 @@ if __name__ == "__main__":
     print(b)
     print(a[b])
     print(a[a > 5])
+
+    x = np.array([1, 2])
+    print(x.dtype)
+    x = np.array([1., 2.])
+    print(x.dtype)
+    x = np.array([1, 2], dtype=np.int64)
+    print(x.dtype)
+
+    x = np.array([[1, 2], [3, 4]], dtype=np.float64)
+    y = np.array([[5, 6], [7, 8]], dtype=np.float64)
+    print(x)
+    print(y)
+
+    print(x + y)
+
+    print(np.add(x, y))
+
+    print(x - y)
+    print(np.subtract(x, y))
+
+    print(x * y)
+    print(np.multiply(x, y))
+
+    print(x / y)
+    print(np.divide(x, y))
+
+    print(x, np.sqrt(x))
+
+    x = np.array([[1, 2], [3, 4]])
+    y = np.array([[5, 6], [7, 8]])
+
+    v = np.array([9, 10])
+    w = np.array([11, 12])
+
+    print(v.dot(x))
+    print(np.dot(v, x))
+
+    print(x.dot(v))
+    print(np.dot(x, v))
+
+    x = np.array([[1, 2], [3, 4]])
+    print(np.sum(x))
+    print(np.sum(x, axis=0))
+    print(np.sum(x, axis=1))
+
+    print(x)
+    print(x.T)
+    print(np.sum(x.T, axis=0))
+
+    v = np.array([1, 2, 3])
+    print(v, v.shape)
+    print(v.T, v.T.shape)
+
+    x = np.array([[1, 2, 3], [4, 5, 6], [7, 8, 9], [10, 11, 12]])
+    v = np.array([1, 0, 1])
+
+    y = np.empty_like(x)
+    print(y)
+    y[1, :] = [4, 4, 4]
+    print(y)
+    for i in range(4):
+        y[i, :] = x[i, :] + v
+    print(y)
+
+    vv = np.tile(v, (4, 1))
+    print(vv)
+    print(vv + x)
+    print(v + x)
+
+    v = np.array([1, 2, 3])  # v has shape (3,)
+    w = np.array([4, 5])  # w has shape (2,)
+    print(v.shape)
+    print(np.reshape(v, (3, 1)) * w.reshape((1, 2)))
+    # v = np.reshape(v, (3, 1))
+    # print(v.shape)
+
+    x = np.array([[1, 2, 3], [4, 5, 6]])
+    print(x.shape)
+    print(v.shape)
+    print(x.dot(v.reshape((3, 1))))
+
+    print(x + v)
+    # print(x.T + w.reshape((1, 2)))
+    print(x + w.reshape(2, 1))
+
+    a = np.arange(8).reshape(2, 2, 2)
+    b = np.arange(2).reshape(1, 2, 1)
+    print(a)
+    print(b)
+
+    a = np.array([[[0],
+                   [10],
+                   [20],
+                   [30]]])
+    b = np.array([[[1, 2, 3, 4, 5]],
+                  [[1, 2, 3, 4, 5]],
+                  [[1, 2, 3, 4, 5]],
+                  [[1, 2, 3, 4, 5]]])
+
+    print(a.shape, b.shape)
+    # print(a.reshape((4, 1, 1)))
+    print(a.reshape((4, 1, 1)) + b)
