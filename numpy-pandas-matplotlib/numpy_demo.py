@@ -310,3 +310,23 @@ if __name__ == "__main__":
     print(a.shape, b.shape)
     # print(a.reshape((4, 1, 1)))
     print(a.reshape((4, 1, 1)) + b)
+
+    a = np.array([1, 2, 3])
+    print(a, a.shape)
+    # a = a.T
+    # print(a)
+    a = np.transpose(a)
+    print(a, a.shape, c := a.reshape((3, 1)), c.shape)
+
+    v = np.array([[2], [1], [3]])
+    print(v)
+
+    c = np.array([[[0, 1, 2],  # a 3D array (two stacked 2D arrays)
+                   [10, 12, 13]],
+                  [[100, 101, 102],
+                   [110, 112, 113]]])
+    print(c)
+    print(c[..., 2])
+    print(c[1, ...])
+
+    np.floor()
