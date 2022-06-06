@@ -152,181 +152,206 @@ def demo_numpy1():
     d = {(x, x + 1): x for x in range(10)}
     print(d)
 
+    def demo_broadcast():
+        az = np.array([[11, 12, 13, 14, 15],
+                       [16, 17, 18, 19, 20],
+                       [21, 22, 23, 24, 25],
+                       [26, 27, 28, 29, 30],
+                       [31, 32, 33, 34, 35]])
+
+        print(az[1, 2])
+
+        a = np.zeros((2, 4))
+        print(a)
+
+        b = np.ones((1, 2))
+        print(b)
+
+        c = np.full((2, 2), 3)
+        print(c)
+
+        d = np.eye(3)
+        print(d)
+
+        e = np.random.random((2, 4))
+        print(e)
+
+        a = np.arange(1, 13)
+        print(a)
+        a = a.reshape((3, 4))
+        print(a)
+        b = a[:2, 1:3]
+        print(b)
+        b[1, 1] = 100
+        print(b)
+        print(a)
+
+        a = np.array([[1, 2], [3, 4], [5, 6]])
+        print(a, type(a))
+        indic = [0, 1]
+        print(a[[0, 1, 2], [0, 1, 0]])
+        print(a[indic])
+
+        a = np.array([[1, 2, 3], [4, 5, 6], [7, 8, 9], [10, 11, 12]])
+
+        b = np.array([0, 2, 0, 1])
+
+        c = a[np.arange(4), b]
+        print(c)
+        c += 10
+        print(c, a)
+        a[range(4), b] += 10
+        print(a)
+
+        b = a > 5
+        print(b)
+        print(a[b])
+        print(a[a > 5])
+
+        x = np.array([1, 2])
+        print(x.dtype)
+        x = np.array([1., 2.])
+        print(x.dtype)
+        x = np.array([1, 2], dtype=np.int64)
+        print(x.dtype)
+
+        x = np.array([[1, 2], [3, 4]], dtype=np.float64)
+        y = np.array([[5, 6], [7, 8]], dtype=np.float64)
+        print(x)
+        print(y)
+
+        print(x + y)
+
+        print(np.add(x, y))
+
+        print(x - y)
+        print(np.subtract(x, y))
+
+        print(x * y)
+        print(np.multiply(x, y))
+
+        print(x / y)
+        print(np.divide(x, y))
+
+        print(x, np.sqrt(x))
+
+        x = np.array([[1, 2], [3, 4]])
+        y = np.array([[5, 6], [7, 8]])
+
+        v = np.array([9, 10])
+        w = np.array([11, 12])
+
+        print(v.dot(x))
+        print(np.dot(v, x))
+
+        print(x.dot(v))
+        print(np.dot(x, v))
+
+        x = np.array([[1, 2], [3, 4]])
+        print(np.sum(x))
+        print(np.sum(x, axis=0))
+        print(np.sum(x, axis=1))
+
+        print(x)
+        print(x.T)
+        print(np.sum(x.T, axis=0))
+
+        v = np.array([1, 2, 3])
+        print(v, v.shape)
+        print(v.T, v.T.shape)
+
+        x = np.array([[1, 2, 3], [4, 5, 6], [7, 8, 9], [10, 11, 12]])
+        v = np.array([1, 0, 1])
+
+        y = np.empty_like(x)
+        print(y)
+        y[1, :] = [4, 4, 4]
+        print(y)
+        for i in range(4):
+            y[i, :] = x[i, :] + v
+        print(y)
+
+        vv = np.tile(v, (4, 1))
+        print(vv)
+        print(vv + x)
+        print(v + x)
+
+        v = np.array([1, 2, 3])  # v has shape (3,)
+        w = np.array([4, 5])  # w has shape (2,)
+        print(v.shape)
+        print(np.reshape(v, (3, 1)) * w.reshape((1, 2)))
+        # v = np.reshape(v, (3, 1))
+        # print(v.shape)
+
+        x = np.array([[1, 2, 3], [4, 5, 6]])
+        print(x.shape)
+        print(v.shape)
+        print(x.dot(v.reshape((3, 1))))
+
+        print(x + v)
+        # print(x.T + w.reshape((1, 2)))
+        print(x + w.reshape(2, 1))
+
+        a = np.arange(8).reshape(2, 2, 2)
+        b = np.arange(2).reshape(1, 2, 1)
+        print(a)
+        print(b)
+
+        a = np.array([[[0],
+                       [10],
+                       [20],
+                       [30]]])
+        b = np.array([[[1, 2, 3, 4, 5]],
+                      [[1, 2, 3, 4, 5]],
+                      [[1, 2, 3, 4, 5]],
+                      [[1, 2, 3, 4, 5]]])
+
+        print(a.shape, b.shape)
+        # print(a.reshape((4, 1, 1)))
+        print(a.reshape((4, 1, 1)) + b)
+
+        a = np.array([1, 2, 3])
+        print(a, a.shape)
+        # a = a.T
+        # print(a)
+        a = np.transpose(a)
+        print(a, a.shape, c := a.reshape((3, 1)), c.shape)
+
+        v = np.array([[2], [1], [3]])
+        print(v)
+
+        c = np.array([[[0, 1, 2],  # a 3D array (two stacked 2D arrays)
+                       [10, 12, 13]],
+                      [[100, 101, 102],
+                       [110, 112, 113]]])
+        print(c)
+        print(c[..., 2])
+        print(c[1, ...])
+
+        np.floor()
+
 
 if __name__ == "__main__":
-    az = np.array([[11, 12, 13, 14, 15],
-                   [16, 17, 18, 19, 20],
-                   [21, 22, 23, 24, 25],
-                   [26, 27, 28, 29, 30],
-                   [31, 32, 33, 34, 35]])
-
-    print(az[1, 2])
-
-    a = np.zeros((2, 4))
-    print(a)
-
-    b = np.ones((1, 2))
-    print(b)
-
-    c = np.full((2, 2), 3)
-    print(c)
-
-    d = np.eye(3)
-    print(d)
-
-    e = np.random.random((2, 4))
-    print(e)
-
-    a = np.arange(1, 13)
-    print(a)
-    a = a.reshape((3, 4))
-    print(a)
-    b = a[:2, 1:3]
-    print(b)
-    b[1, 1] = 100
-    print(b)
-    print(a)
-
-    a = np.array([[1, 2], [3, 4], [5, 6]])
+    x = [1, 2, 3]
+    a = np.asarray(x)
     print(a, type(a))
-    indic = [0, 1]
-    print(a[[0, 1, 2], [0, 1, 0]])
-    print(a[indic])
 
-    a = np.array([[1, 2, 3], [4, 5, 6], [7, 8, 9], [10, 11, 12]])
+    b = np.array(x)
+    print(b, type(b))
 
-    b = np.array([0, 2, 0, 1])
-
-    c = a[np.arange(4), b]
-    print(c)
-    c += 10
-    print(c, a)
-    a[range(4), b] += 10
+    a = np.linspace(0, 10, 20)
     print(a)
 
-    b = a > 5
-    print(b)
-    print(a[b])
-    print(a[a > 5])
-
-    x = np.array([1, 2])
-    print(x.dtype)
-    x = np.array([1., 2.])
-    print(x.dtype)
-    x = np.array([1, 2], dtype=np.int64)
-    print(x.dtype)
-
-    x = np.array([[1, 2], [3, 4]], dtype=np.float64)
-    y = np.array([[5, 6], [7, 8]], dtype=np.float64)
-    print(x)
-    print(y)
-
-    print(x + y)
-
-    print(np.add(x, y))
-
-    print(x - y)
-    print(np.subtract(x, y))
-
-    print(x * y)
-    print(np.multiply(x, y))
-
-    print(x / y)
-    print(np.divide(x, y))
-
-    print(x, np.sqrt(x))
-
-    x = np.array([[1, 2], [3, 4]])
-    y = np.array([[5, 6], [7, 8]])
-
-    v = np.array([9, 10])
-    w = np.array([11, 12])
-
-    print(v.dot(x))
-    print(np.dot(v, x))
-
-    print(x.dot(v))
-    print(np.dot(x, v))
-
-    x = np.array([[1, 2], [3, 4]])
-    print(np.sum(x))
-    print(np.sum(x, axis=0))
-    print(np.sum(x, axis=1))
-
-    print(x)
-    print(x.T)
-    print(np.sum(x.T, axis=0))
-
-    v = np.array([1, 2, 3])
-    print(v, v.shape)
-    print(v.T, v.T.shape)
-
-    x = np.array([[1, 2, 3], [4, 5, 6], [7, 8, 9], [10, 11, 12]])
-    v = np.array([1, 0, 1])
-
-    y = np.empty_like(x)
-    print(y)
-    y[1, :] = [4, 4, 4]
-    print(y)
-    for i in range(4):
-        y[i, :] = x[i, :] + v
-    print(y)
-
-    vv = np.tile(v, (4, 1))
-    print(vv)
-    print(vv + x)
-    print(v + x)
-
-    v = np.array([1, 2, 3])  # v has shape (3,)
-    w = np.array([4, 5])  # w has shape (2,)
-    print(v.shape)
-    print(np.reshape(v, (3, 1)) * w.reshape((1, 2)))
-    # v = np.reshape(v, (3, 1))
-    # print(v.shape)
-
-    x = np.array([[1, 2, 3], [4, 5, 6]])
-    print(x.shape)
-    print(v.shape)
-    print(x.dot(v.reshape((3, 1))))
-
-    print(x + v)
-    # print(x.T + w.reshape((1, 2)))
-    print(x + w.reshape(2, 1))
-
-    a = np.arange(8).reshape(2, 2, 2)
-    b = np.arange(2).reshape(1, 2, 1)
-    print(a)
+    b = np.logspace(0, 9, 10, base=2)
     print(b)
 
-    a = np.array([[[0],
-                   [10],
-                   [20],
-                   [30]]])
-    b = np.array([[[1, 2, 3, 4, 5]],
-                  [[1, 2, 3, 4, 5]],
-                  [[1, 2, 3, 4, 5]],
-                  [[1, 2, 3, 4, 5]]])
+    x = np.array([[0, 1, 2], [3, 4, 5], [6, 7, 8], [9, 10, 11]])
+    rows = np.array([[0, 0], [3, 3]])
+    cols = np.array([[0, 2], [0, 2]])
+    print(x)
+    y = x[rows, cols]
+    print(y, type(y), y.shape)
 
-    print(a.shape, b.shape)
-    # print(a.reshape((4, 1, 1)))
-    print(a.reshape((4, 1, 1)) + b)
-
-    a = np.array([1, 2, 3])
-    print(a, a.shape)
-    # a = a.T
-    # print(a)
-    a = np.transpose(a)
-    print(a, a.shape, c := a.reshape((3, 1)), c.shape)
-
-    v = np.array([[2], [1], [3]])
-    print(v)
-
-    c = np.array([[[0, 1, 2],  # a 3D array (two stacked 2D arrays)
-                   [10, 12, 13]],
-                  [[100, 101, 102],
-                   [110, 112, 113]]])
-    print(c)
-    print(c[..., 2])
-    print(c[1, ...])
-
-    np.floor()
+    x = np.arange(32).reshape((8, 4))
+    print(x)
+    print(x[[4, 2, 1, 7]])
