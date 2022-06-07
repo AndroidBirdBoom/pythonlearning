@@ -331,7 +331,7 @@ def demo_numpy1():
         np.floor()
 
 
-if __name__ == "__main__":
+def demo_shape():
     x = [1, 2, 3]
     a = np.asarray(x)
     print(a, type(a))
@@ -354,4 +354,76 @@ if __name__ == "__main__":
 
     x = np.arange(32).reshape((8, 4))
     print(x)
+    print(x.T)
     print(x[[4, 2, 1, 7]])
+
+    print(x[[4, 2, 1, 7]].T)
+
+    for i in np.nditer(x):
+        print(i, end=',')
+    print('\n')
+    for i in np.nditer(x, order='F', op_flags=['readwrite']):
+        i *= 2
+    print(x)
+
+    a = np.arange(0, 60, 5)
+    a = a.reshape(3, 4)
+    print('原始数组是：')
+    print(a)
+    print('\n')
+    print('修改后的数组是：')
+    for x in np.nditer(a, flags=['c_index'], order='F'):
+        print(x, end=", ")
+
+    print('\n')
+
+    b = np.array([1, 2, 3, 4], dtype=int)
+    for x, y in np.nditer([a, b]):
+        print(x, y, end='-')
+    print('\n')
+    print(a)
+    b = 1
+    for i in a:
+        if b < 2:
+            b += 1
+            print(i)
+        else:
+            break
+
+    a = np.arange(18).reshape((3, 2, 3))
+    print(a)
+    for i in a:
+        print(i)
+
+    for i in a.flat:
+        print(i)
+
+    a = np.array([[1, 2], [3, 4]])
+    b = a.flat
+    print(type(b))
+    for i in a.flat:
+        print(i)
+
+    b = a.flatten()
+    b = b * 2
+    print(a, b, type(b), b.shape)
+
+    b = a.ravel()
+    b = b * 2
+    print(a, b, type(b), b.shape)
+
+
+if __name__ == "__main__":
+    a = np.arange(12).reshape(3, 4)
+    print(a)
+    print(np.transpose(a))
+    print(a.T)
+
+    a = np.arange(8).reshape(2, 2, 2)
+    print(a)
+    print(np.where(a == 6))
+    print(a[1, 1, 0])
+    b = np.rollaxis(a, 2, 0)
+    print(b)
+    print(np.where(b == 6))
+    print(b[0, 1, 1])

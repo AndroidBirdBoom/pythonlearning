@@ -123,4 +123,28 @@ b = np.ones((4, 1, 5))
 a + b  # 报错
 ```
 
-##   
+### 7. 迭代数组
+
+> `np.nditer(a)`
+
+```python
+import numpy as np
+
+a = np.arange(12).reshape((3, 4))
+for i in np.nditer(a):
+    print(i)
+
+# 将数组中的数据扩大一倍
+for i in np.nditer(a, op_flags=['readwrite']):
+    i *= 2
+
+# 最外层的依次输出
+for i in a:
+    print(i)
+```
+
+### 8. 数组操作
+
+> 改变数组形状：`reshape()`、`flatten()`、`ravel()`  
+
+> 翻转数组：`np.transpose()`、`a.T`、``、``
