@@ -1,5 +1,6 @@
 import pandas as pd
 import numpy as np
+import json
 
 mydataset = {
     'sites': ["Google", "Runoob", "Wiki"],
@@ -57,7 +58,7 @@ def demo_pandas1():
     print(df.loc[['x', 'z']])
 
 
-if __name__ == "__main__":
+def demo_df():
     s = pd.Series([1, 3, 5, np.nan, 6, 8], index=['x', 'y', 'z', 'm', 'n', 'd'])
     print(s)
     dates = pd.date_range('20130101', periods=6)
@@ -109,3 +110,53 @@ if __name__ == "__main__":
     print(df3[df3.tan.isin([1, 2, 5, 6, 3, 11])])
     # df4 = df3.copy()
     # print(df4['tan'])
+
+
+if __name__ == "__main__":
+    df = pd.read_csv('../data/nba.csv')
+    print(df.to_string())
+    print('------------')
+    print(df.head(10))
+    print('------------')
+    print(df.tail(5))
+    print(df)
+    d = {'name': ['LiHua', 'WangMing', 'Tao'], 'age': [19, 39, 23], 'sex': ['female', 'female', 'male']}
+    df1 = pd.DataFrame(d)
+    print(df1)
+    df1.to_csv('../data/people.csv')
+    print(df.info())
+
+    URL = 'https://static.runoob.com/download/sites.json'
+
+    df2 = pd.read_json('../data/sites.json', encoding='GB18030')
+    print(df2.to_string())
+
+    df3 = pd.read_json(URL)
+    print(df3)
+
+    try:
+        df4 = pd.read_json('../data/nest_list.json')
+        print(df4)
+    except Exception as e:
+        with open('../data/nested_list.json', 'r') as f:
+            data = json.load(f)
+            print(data)
+
+        df4_nested = pd.json_normalize(data, record_path=['students'])
+        print(df4_nested)
+
+        df5 = pd.json_normalize(data, record_path=['students'], meta=['school_name', 'class'])
+        print(df5)
+
+    try:
+        df6 = pd.read_json('../data/nested_mix.json')
+        print(df6)
+    except Exception as e:
+        with open('../data/nested_mix.json', 'r') as f:
+            data = json.loads(f.read())
+            print(data)
+        df6_nested = pd.json_normalize(data, record_path=['students'],
+                                       meta=['class', 'school_name', ['info', 'president'], ['info', 'address'],
+                                             ['info', 'contacts', 'tel'], ['info', 'contacts', 'email']])
+
+        print(df6_nested.to_string())

@@ -100,5 +100,31 @@ pf.iloc[1, 1]  # 第2行&第2列
 
 # 布尔选择
 pf[pf > 2]
-pf[pf.number.isin([1, 3])]      # 查找columns的'number'列中包含【1，3】的行
+pf[pf.number.isin([1, 3])]  # 查找columns的'number'列中包含【1，3】的行
+```
+
+### 4. csv文件
+
+```python
+import pandas as pd
+
+# 读取文件
+pf = pd.read_csv('../data/nba.csv')
+
+# 写入文件
+people = {'name': ['LiHua', 'WangMing', 'Tao'], 'age': [19, 39, 23], 'sex': ['female', 'female', 'male']}
+pf = pd.DataFrame(people)
+pf.to_csv('../data/people.csv')
+```
+
+### 4. json文件
+
+```python
+import pandas as pd
+
+# 读取一般文件
+pf = pd.read_json('../data/sites.json')
+
+# 读取嵌套文件
+
 ```
