@@ -88,6 +88,8 @@
 - [chardet](####123)
 - [psutil](####124)
 
+[杂项](#someelse)
+
 ## <span id = '##1'>函数</span>
 
 ----------
@@ -1451,6 +1453,7 @@ sha1.hexdigest()  # 140bit
 ### 8. <span id = '###118'>contextlib</span>
 
 ### 9. <span id = '###119'>urllib</span>
+
 > 网络请求框架
 
 ```python
@@ -1460,18 +1463,19 @@ from urllib import request
 urls = 'https://www.baidu.com'
 
 with request.urlopen(urls) as f:  # 访问url
-  f.read()  # 获取内容
+    f.read()  # 获取内容
 
 # GET带参数
-datas = {'account':'ergou','password':'123'}
-req = request.Request(urls+"?"+urllib.parse.urlencode(datas), method='GET')
+datas = {'account': 'ergou', 'password': '123'}
+req = request.Request(urls + "?" + urllib.parse.urlencode(datas), method='GET')
 with request.urlopen(req) as f:
-  f.read()
+    f.read()
 
 # POST传参数
-with request.urlopen(urls,data=urllib.parse.urlencode(datas).encode('utf-8'))
-
+with request.urlopen(urls, data=urllib.parse.urlencode(datas).encode('utf-8'))
+    pass
 ```
+
 ### 10. <span id = '###1110'>XML</span>
 
 ### 11. <span id = '###1111'>HTMLParser</span>
@@ -1485,3 +1489,10 @@ with request.urlopen(urls,data=urllib.parse.urlencode(datas).encode('utf-8'))
 ### 3. <span id = '###123'>chardet</span>
 
 ### 4. <span id = '###124'>psutil</span>
+
+### <span id = 'someelse'>杂项</span>
+> `*`用在列表钱淼类似于降维
+```python
+s = [[1,2],[4,5]]
+*s         # [1,2] [4,5]  变成一维的同时，也成为了两个数组
+```

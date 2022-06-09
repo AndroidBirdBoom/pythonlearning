@@ -159,3 +159,39 @@ df.dropna(how='any')
 # 填充缺省数据
 df.fillna(value=49)
 ```
+
+### 7. 计算
+
+```python
+import pandas as pd
+
+```
+
+### 8. 合并
+
+```python
+import pandas as pd
+
+left = pd.DataFrame({'key': ['foo', 'foo'], 'lval': [1, 2]})
+right = pd.DataFrame({'key': ['foo', 'foo'], 'rval': [4, 5]})
+pd.concat([left, right])  # 连接两个
+
+pd.merge(left, right, on='key')  # 以key合并
+
+left.append(right)  # 追加几行
+```
+
+### 9. 分组
+
+```python
+import pandas as pd
+import numpy as np
+
+df = pd.DataFrame({'A': ['foo', 'bar', 'foo', 'bar',
+                         'foo', 'bar', 'foo', 'foo'],
+                   'B': ['one', 'one', 'two', 'three',
+                         'two', 'two', 'one', 'three'],
+                   'C': np.random.randn(8),
+                   'D': np.random.randn(8)})
+print(df.groupby(['A', 'B']).sum())
+```

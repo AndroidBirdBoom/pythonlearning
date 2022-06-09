@@ -162,7 +162,7 @@ def demo_df():
             print(df6_nested.to_string())
 
 
-if __name__ == "__main__":
+def demo_aadd():
     s1 = pd.Series([1, 2, 3, 4, 5, 6], index=pd.date_range('20130102', periods=6))
     print(s1)
 
@@ -212,4 +212,100 @@ if __name__ == "__main__":
     s = pd.Series([1, 3, 5, np.nan, 6, 8], index=dates).shift(2)
     print(s)
     print(df.sub(s, axis='index'))
+    print(df)
+    print(df.apply(np.cumsum))
+    print(df.apply(lambda x: x + 1))
+    print(df.apply(lambda x: x.max() - x.min()))
 
+    s = pd.Series(np.random.randint(0, 7, size=10))
+    print(s)
+    print(s.value_counts())
+
+    s = pd.Series(['A', 'B', 'C', 'Aaba', 'Baca', np.nan, 'CABA', 'dog', 'cat'])
+    print(s.str.lower())
+
+
+if __name__ == "__main__":
+    df = pd.DataFrame(np.random.randn(10, 4))
+    print(df)
+
+    pieces = df[:3]
+    print(pieces, type(pieces))
+
+    left = pd.DataFrame({'key': ['foo', 'bar'], 'lval': [1, 2]})
+    right = pd.DataFrame({'key': ['foo', 'bar'], 'rval': [4, 5]})
+
+    print(left, '\n', right)
+    print(pd.concat([left, right]))
+
+    s = pd.Series([1, 2, 3], index=['x', 'y', 'z'])
+    s2 = pd.Series([4, 5, 6], index=['x', 'y', 'z'])
+    print(s, '\n', s2)
+    print(pd.concat([s, s2]))
+
+    print(left, '\n', right)
+    print(pd.merge(left, right, on='key'))
+
+    df = pd.DataFrame(np.random.randn(8, 4), columns=['A', 'B', 'C', 'D'])
+    print(df)
+
+    s = df.iloc[3]
+    print(s)
+
+    print(df.append(s))
+
+    print(left, '\n', right)
+
+    print(left.append(right))
+
+    df = pd.DataFrame({'A': ['foo', 'bar', 'foo', 'bar',
+                             'foo', 'bar', 'foo', 'foo'],
+                       'B': ['one', 'one', 'two', 'three',
+                             'two', 'two', 'one', 'three'],
+                       'C': np.random.randn(8),
+                       'D': np.random.randn(8)})
+    print(df)
+
+    s = pd.Series(['ddd', 'aaa', 13, 45], index=['A', 'B', 'C', 'D'], name=2)
+    print(s)
+    print(df.append(s))
+
+    print(df.groupby('A').sum())
+    print(df.groupby(['A', 'B']).sum())
+
+    tuples = list(zip(*[['bar', 'bar', 'baz', 'baz',
+                         'foo', 'foo', 'qux', 'qux'],
+                        ['one', 'two', 'one', 'two',
+                         'one', 'two', 'one', 'two']]))
+
+    print(tuples)
+    z = [['bar', 'bar', 'baz', 'baz',
+          'foo', 'foo', 'qux', 'qux'],
+         ['one', 'two', 'one', 'two',
+          'one', 'two', 'one', 'two']]
+    print(z)
+    print(*z)
+    print(list(zip(*z)))
+    print(list(zip(z)))
+
+    print(list(zip(z[0], z[1])))
+
+    s = np.full((2, 3, 4), 4)
+    print(s)
+    print(*s)
+
+    print(tuples)
+    index = pd.MultiIndex.from_tuples(tuples, name=['first', 'second'])
+    print(index)
+
+    df = pd.DataFrame(np.random.randn(8, 2), index, columns=['A', 'B'])
+    print(df)
+    print(df.stack().to_numpy(), type(df.stack()))
+
+    df = pd.DataFrame({'A': ['one', 'one', 'two', 'three'] * 3,
+                       'B': ['A', 'B', 'C'] * 4,
+                       'C': ['foo', 'foo', 'foo', 'bar', 'bar', 'bar'] * 2,
+                       'D': np.random.randn(12),
+                       'E': np.random.randn(12)})
+    print(df)
+    print(pd.pivot_table(df, values='D', index=['A', 'B'], columns=['C']))
