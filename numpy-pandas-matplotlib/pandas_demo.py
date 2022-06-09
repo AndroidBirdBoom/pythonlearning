@@ -108,55 +108,108 @@ def demo_df():
     df3 = pd.DataFrame(np.arange(12).reshape((3, 4)), index=list('ABC'), columns=['apple', 'orange', 'banana', 'tan'])
     print(df3)
     print(df3[df3.tan.isin([1, 2, 5, 6, 3, 11])])
+
     # df4 = df3.copy()
     # print(df4['tan'])
 
+    def demo_csv_json():
+        df = pd.read_csv('../data/nba.csv')
+        print(df.to_string())
+        print('------------')
+        print(df.head(10))
+        print('------------')
+        print(df.tail(5))
+        print(df)
+        d = {'name': ['LiHua', 'WangMing', 'Tao'], 'age': [19, 39, 23], 'sex': ['female', 'female', 'male']}
+        df1 = pd.DataFrame(d)
+        print(df1)
+        df1.to_csv('../data/people.csv')
+        print(df.info())
+
+        URL = 'https://static.runoob.com/download/sites.json'
+
+        df2 = pd.read_json('../data/sites.json', encoding='GB18030')
+        print(df2.to_string())
+
+        df3 = pd.read_json(URL)
+        print(df3)
+
+        try:
+            df4 = pd.read_json('../data/nest_list.json')
+            print(df4)
+        except Exception as e:
+            with open('../data/nested_list.json', 'r') as f:
+                data = json.load(f)
+                print(data)
+
+            df4_nested = pd.json_normalize(data, record_path=['students'])
+            print(df4_nested)
+
+            df5 = pd.json_normalize(data, record_path=['students'], meta=['school_name', 'class'])
+            print(df5)
+
+        try:
+            df6 = pd.read_json('../data/nested_mix.json')
+            print(df6)
+        except Exception as e:
+            with open('../data/nested_mix.json', 'r') as f:
+                data = json.loads(f.read())
+                print(data)
+            df6_nested = pd.json_normalize(data, record_path=['students'],
+                                           meta=['class', 'school_name', ['info', 'president'], ['info', 'address'],
+                                                 ['info', 'contacts', 'tel'], ['info', 'contacts', 'email']])
+
+            print(df6_nested.to_string())
+
 
 if __name__ == "__main__":
-    df = pd.read_csv('../data/nba.csv')
-    print(df.to_string())
-    print('------------')
-    print(df.head(10))
-    print('------------')
-    print(df.tail(5))
+    s1 = pd.Series([1, 2, 3, 4, 5, 6], index=pd.date_range('20130102', periods=6))
+    print(s1)
+
+    df = pd.DataFrame(
+        {'name': ['zhao', 'qian', 'sun', 'li'], 'age': [13, 37, 82, 32], 'sex': ['male', 'female', 'male', 'male']})
     print(df)
-    d = {'name': ['LiHua', 'WangMing', 'Tao'], 'age': [19, 39, 23], 'sex': ['female', 'female', 'male']}
-    df1 = pd.DataFrame(d)
-    print(df1)
-    df1.to_csv('../data/people.csv')
-    print(df.info())
+    df.age = 39
+    print(df)
+    df[3:] = ['xie', 22, 'female']
+    print(df)
+    datas = ['x', 'y', 'z', 'g']
+    df.index = datas
+    df.at[datas[0], 'age'] = 66
+    print(df)
+    df.at['y', 'age'] = 9
+    print(df)
+    df.iloc[0, 2] = 'Null'
+    print('\n', df)
+    df.iat[0, 2] = 'male'
+    print('\n', df)
 
-    URL = 'https://static.runoob.com/download/sites.json'
+    df.loc[:, 'age'] = [1, 20, 38, 18]
+    print(df)
+    df2 = df.reindex(index=datas, columns=list(df.columns) + ['adr'])
+    print(df2)
+    df2.loc['x':'z', 'adr'] = ['sd', 'jn', 'dd']
+    print(df2)
+    df2.iloc[0:2, 3:] = ['xx', 'xx']
+    print(df2)
+    df2.loc['x', 'age'] = 28
+    print('\n', df2)
+    print(df2.loc[:, ['adr', 'age']])
+    print(df2)
+    print(df2.dropna(how='any'))
+    print('\n', df2.fillna(value='zz'))
+    print(df2.isna())
+    print(df2, '\n')
+    df2.loc['x', 'age'] = np.nan
+    print(df2, '\n')
 
-    df2 = pd.read_json('../data/sites.json', encoding='GB18030')
-    print(df2.to_string())
+    dates = pd.date_range('20130101', periods=6)
+    df = pd.DataFrame(np.random.randn(6, 4), index=dates, columns=list('ABCD'))
+    print(df, '\n')
+    print(df.mean(), '\n')
+    print(df.mean(1), '\n')
 
-    df3 = pd.read_json(URL)
-    print(df3)
+    s = pd.Series([1, 3, 5, np.nan, 6, 8], index=dates).shift(2)
+    print(s)
+    print(df.sub(s, axis='index'))
 
-    try:
-        df4 = pd.read_json('../data/nest_list.json')
-        print(df4)
-    except Exception as e:
-        with open('../data/nested_list.json', 'r') as f:
-            data = json.load(f)
-            print(data)
-
-        df4_nested = pd.json_normalize(data, record_path=['students'])
-        print(df4_nested)
-
-        df5 = pd.json_normalize(data, record_path=['students'], meta=['school_name', 'class'])
-        print(df5)
-
-    try:
-        df6 = pd.read_json('../data/nested_mix.json')
-        print(df6)
-    except Exception as e:
-        with open('../data/nested_mix.json', 'r') as f:
-            data = json.loads(f.read())
-            print(data)
-        df6_nested = pd.json_normalize(data, record_path=['students'],
-                                       meta=['class', 'school_name', ['info', 'president'], ['info', 'address'],
-                                             ['info', 'contacts', 'tel'], ['info', 'contacts', 'email']])
-
-        print(df6_nested.to_string())

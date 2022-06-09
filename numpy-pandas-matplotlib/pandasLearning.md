@@ -23,7 +23,8 @@ myvar['sites'][2]  # Wiki
 ## DataFrame
 
 > 二维数组  
-> `pandas.DataFrame( data, index, columns, dtype, copy)`
+> `pandas.DataFrame( data, index, columns, dtype, copy)`  
+> `loc`方法主要是对标签起作用，`iloc`方法对位置索引起作用
 
 ### 1. 创建DataFrame
 
@@ -127,4 +128,34 @@ pf = pd.read_json('../data/sites.json')
 
 # 读取嵌套文件
 
+```
+
+### 5. 赋值
+
+```python
+import pandas as pd
+
+mydataset = {}
+df = pd.DataFrame(mydataset, index=['x', 'y', 'z'])
+
+# 按坐标赋值
+df.iloc[0, 1] = 45  # df.iat也可以
+
+# 按标签赋值 
+df['name', 'x'] = 'wang'
+```
+
+### 6. 缺省值
+
+```python
+import pandas as pd
+
+df = pd.DataFrame()
+
+# 显示一个df大小的包含True和False的矩阵
+df.isna()
+# 丢弃缺省数据
+df.dropna(how='any')
+# 填充缺省数据
+df.fillna(value=49)
 ```
