@@ -165,5 +165,79 @@ axs[0, 0].plot(x, y)
 axs[1, 1].plot(x, y)
 
 plt.show()
-
 ```
+
+### 7. 散点图
+
+> 通过`plt.scatter()`来绘制散点图
+
+```python
+import matplotlib.pyplot as plt
+import numpy as np
+
+N = 50
+x = np.random.randn(N)
+y = np.random.randn(N)
+colors = np.random.randn(N)
+area = (30 * np.random.rand(N)) ** 2
+plt.scatter(x, y, s=area, c=colors, alpha=0.5, cmap='Accent')
+plt.colorbar()
+plt.show()
+```
+
+![](../pic/img_10.png)
+
+> `cmap`颜色条参数值可以是以下值：
+
+![](../pic/img_11.png)  
+![](../pic/img_12.png)  
+![](../pic/img_13.png)  
+![](../pic/img_14.png)  
+![](../pic/img_15.png)  
+![](../pic/img_16.png)
+![](../pic/img_17.png)
+![](../pic/img_18.png)  
+![](../pic/img_19.png)  
+![](../pic/img_20.png)
+![](../pic/img_21.png)
+![](../pic/img_22.png)
+![](../pic/img_23.png)
+
+### 8. 柱形图
+
+> `plt.bar()` 代表竖向柱形图
+
+> `plt.barh()`代表横向柱形图
+
+```python
+import matplotlib.pyplot as plt
+import numpy as np
+
+x = np.array(["Runoob-1", "Runoob-2", "Runoob-3", "C-RUNOOB"])
+y = np.array([12, 22, 6, 18])
+colors = ['r', 'b', 'g', 'c']
+# 设置竖向柱形图
+plt.bar(x, y, width=0.5, color=colors)
+# 设置横向柱形图
+plt.barh(x, y, height=0.5, color=colors)
+plt.show()
+```
+
+![](../pic/img_24.png)
+
+### 9. 饼图
+
+> `plt.pie()`绘制饼图  
+> 默认扇形图是从x轴开始逆时针移动的
+
+```python
+import matplotlib.pyplot as plt
+import numpy as np
+
+y = np.array([35, 25, 25, 15])
+plt.pie(y, colors=['r', 'g', 'b', 'c'], labels=['A', 'B', 'C', 'D'], explode=[0, 0.2, 0, 0], autopct='%.2f%%')
+plt.title('pie title')
+plt.show()
+```
+
+![](../pic/img_25.png)

@@ -4,7 +4,8 @@ import matplotlib.markers
 import matplotlib.pyplot as plt
 import numpy as np
 
-if __name__ == "__main__":
+
+def demo_plot():
     xpoints = np.array([0, 6, 10])
     ypoints = np.array([0, 20, 100])
     plt.plot(xpoints, ypoints, 'y')
@@ -74,5 +75,38 @@ if __name__ == "__main__":
 
     fig, (axs, ax1) = plt.subplots(2, 1, subplot_kw=dict(projection='polar'))
     axs.plot(x, y)
+    plt.show()
 
+
+if __name__ == "__main__":
+    x = np.array([1, 2, 3, 4, 5, 6, 7, 8])
+    y = np.array([1, 4, 9, 16, 7, 11, 23, 18])
+    plt.scatter(x, y)
+    sizes = np.array([20, 50, 100, 200, 500, 1000, 60, 90])
+    colors = np.array(["red", "green", "black", "orange", "purple", "beige", "cyan", "magenta"])
+    plt.scatter(x, y, s=sizes, c=colors)
+    plt.show()
+
+    N = 50
+    x = np.random.randn(N)
+    y = np.random.randn(N)
+    # colors = np.random.randn(N)
+    colors = np.array(
+        [0, 10, 20, 30, 40, 45, 50, 55, 60, 70, 80, 90, 100, 0, 10, 20, 30, 40, 45, 50, 55, 60, 70, 80, 90, 100, 0, 10,
+         20, 30, 40, 45, 50, 55, 60, 70, 80, 90, 100, 0, 10, 20, 30, 40, 45, 50, 55, 60, 70, 100])
+    area = (30 * np.random.rand(N)) ** 2
+    plt.scatter(x, y, s=area, c=colors, alpha=0.5, cmap='CMRmap')
+    plt.colorbar()
+    plt.title("scatter title")
+    plt.show()
+
+    x = np.array(["Runoob-1", "Runoob-2", "Runoob-3", "C-RUNOOB"])
+    y = np.array([12, 22, 6, 18])
+    colors = np.array(['r', 'b', 'g', 'c'])
+    plt.bar(x, y, color=colors, width=0.5, align='center')
+    plt.show()
+
+    y = np.array([35, 25, 25, 15])
+    plt.pie(y, labels=['A', 'B', 'C', 'D'], colors=['r', 'g', 'b', 'c'], explode=[0, 0.2, 0, 0], autopct='%.1f%%')
+    plt.title('pie title')
     plt.show()
