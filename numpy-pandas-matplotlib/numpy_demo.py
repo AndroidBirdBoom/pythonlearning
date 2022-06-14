@@ -427,3 +427,13 @@ if __name__ == "__main__":
     print(b)
     print(np.where(b == 6))
     print(b[0, 1, 1])
+
+    x = [1, 2, 3]
+    n = np.asarray(x)
+    print(n)
+
+    y = np.linspace(0, 20, num=10)
+    print(y)
+
+    z = np.logspace(0, 2, num=10, base=2)
+    print(z)

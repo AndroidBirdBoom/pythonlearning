@@ -2,6 +2,8 @@ import pandas as pd
 import numpy as np
 import json
 
+import pandas.util.version
+
 mydataset = {
     'sites': ["Google", "Runoob", "Wiki"],
     'number': [1, 2, 3]
@@ -225,7 +227,7 @@ def demo_aadd():
     print(s.str.lower())
 
 
-if __name__ == "__main__":
+def demo_other():
     df = pd.DataFrame(np.random.randn(10, 4))
     print(df)
 
@@ -309,3 +311,45 @@ if __name__ == "__main__":
                        'E': np.random.randn(12)})
     print(df)
     print(pd.pivot_table(df, values='D', index=['A', 'B'], columns=['C']))
+
+
+if __name__ == "__main__":
+    s = pd.Series(np.arange(5))
+    print(s)
+
+    df = pd.DataFrame(np.random.random((2, 3)), index=['A', 'B'], columns=['age', 'name', 'adr'])
+    print(df)
+    print(df.to_numpy())
+    print(s.to_numpy())
+    print(s.index.to_numpy())
+    print(df.columns.to_numpy())
+
+    df1 = pd.DataFrame({
+        'one': pd.Series(np.random.rand(3), index=['a', 'b', 'c']),
+        'two': pd.Series(np.random.rand(4), index=['a', 'b', 'c', 'd']),
+        'three': pd.Series(np.random.rand(3), index=['b', 'c', 'd'])
+    })
+    print(df1)
+    df1['three']['a'] = 233
+    df1.loc['d', 'one'] = 100
+    df1.iloc[2, 1] = 10
+    print(df1)
+    print(df1.iloc[1], '\n', df1.loc['b'])
+    print(df1.one, '\n', df1['two'])
+    row = df1.two
+    print(df1.sub(row, axis=0))
+    print(df1.sort_values(by='one'))
+    print(df1 > 0.3)
+    print((df1 > 0.3).all())
+    print(df1.index == 'a')
+
+    df1 = pd.DataFrame({'A': [1., np.nan, 3., 5., np.nan],
+                        'B': [np.nan, 2., 3., np.nan, 6.]})
+
+    df2 = pd.DataFrame({'A': [5., 2., 4., np.nan, 3., 7.],
+                        'B': [np.nan, np.nan, 3., 4., 6., 8.]})
+
+    print(df1, '\n', df2)
+
+    df1.combine_first(df2)
+
