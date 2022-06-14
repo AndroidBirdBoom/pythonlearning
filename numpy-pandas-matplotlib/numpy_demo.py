@@ -437,3 +437,39 @@ if __name__ == "__main__":
 
     z = np.logspace(0, 2, num=10, base=2)
     print(z)
+
+    a = np.arange(24).reshape((4, 6))
+    print(a)
+
+    print(a[[1, 2, 3], [2, 4, 5]])
+    a = np.arange(24).reshape((4, 2, 3))
+    print(a)
+    print(a[[0, 2], [0, 1], [0, 2]])
+
+    print(a)
+    s = np.split(a, 2)
+    print(s)
+
+    s = np.hsplit(a, 2)
+    print(s)
+
+    b = np.arange(8).reshape((2, 4))
+    print(b)
+    print(np.split(b, 2))
+    print(np.split(b, 2, 0))
+    print(np.split(b, 2, 1))
+    print(np.hsplit(b, 2))
+    print(np.vsplit(b, 2))
+
+    c = np.arange(10, 18).reshape((2, 4))
+    print(np.stack((b, c), 0))
+    # print(np.stack(b, c), 1)
+
+    a = np.array([[1, 2, 3], [4, 5, 6]])
+    print(a)
+    b = np.resize(a, (3, 2))
+    print(b, b.shape)
+    c = a.reshape((3, 2))
+    print(c, c.shape)
+    print(np.resize(b, (3, 3)))
+    print(c.reshape((3, 3)))
