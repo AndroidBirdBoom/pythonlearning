@@ -78,7 +78,7 @@ def demo_plot():
     plt.show()
 
 
-if __name__ == "__main__":
+def pie_demo():
     x = np.array([1, 2, 3, 4, 5, 6, 7, 8])
     y = np.array([1, 4, 9, 16, 7, 11, 23, 18])
     plt.scatter(x, y)
@@ -110,3 +110,37 @@ if __name__ == "__main__":
     plt.pie(y, labels=['A', 'B', 'C', 'D'], colors=['r', 'g', 'b', 'c'], explode=[0, 0.2, 0, 0], autopct='%.1f%%')
     plt.title('pie title')
     plt.show()
+
+
+if __name__ == "__main__":
+    delta = 0.5
+    x = np.arange(-3.0, 3.0, delta)
+    y = np.arange(-2.0, 2.0, delta)
+    X, Y = np.meshgrid(x, y)
+    Z = X - Y
+    plt.contour(X, Y, Z)
+    plt.show()
+
+
+    def f(x, y):
+        return (1 - x / 2 + x ** 5 + y ** 3) * np.exp(-x ** 2 - y ** 2)
+
+
+    n = 256
+    x = np.linspace(-3, 3, n)
+    y = np.linspace(-3, 3, n)
+
+    # 生成网格
+    X, Y = np.meshgrid(x, y)
+
+    # contour 仅仅绘制出等高线
+    C = plt.contour(X, Y, f(X, Y), 8, cmap='hot', linewidth=.5)
+
+    # 添加数据标签
+    plt.clabel(C, inline=True, fontsize=10)
+
+    plt.xticks(())
+    plt.yticks(())
+
+    plt.show()
+
